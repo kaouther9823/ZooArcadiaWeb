@@ -1,0 +1,182 @@
+@import "custom";
+
+body {
+  background-color: #e8f5e9; /* Couleur de fond verte pâle */
+}
+.navbar {
+  background-color: #2e7d32; /* Vert foncé pour la barre de navigation */
+}
+.navbar-brand, .nav-link {
+  color: #ffffff !important; /* Couleur des liens en blanc */
+}
+.hero {
+  background-image: url('../images/hero-image.jpg'); /* Image de fond pour le hero */
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  text-align: center;
+  padding: 100px 0;
+}
+.hero-no-background {
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  text-align: center;
+  padding: 100px 0;
+}
+.hero h1 {
+  font-size: 4rem;
+  font-weight: bold;
+}
+.hero p {
+  font-size: 1.5rem;
+}
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+.footer {
+  background-color: #2e7d32;
+  color: #ffffff;
+  padding: 20px 0;
+  text-align: center;
+}
+.hero-scene{
+  position: relative;
+  &::before{
+    content:"";
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-image: url('../images/hero-image.jpg');
+    background-size: cover;
+    filter: brightness(0.3);
+  }
+
+  *{
+    //Positionner les éléments devant le ::before
+    position:relative;
+  }
+
+  .hero-scene-content{
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.image-card{
+  position:relative;
+  &:hover{
+    .titre-image{
+      opacity: 1;
+    }
+    img{
+      filter: brightness(0.3);
+    }
+  }
+
+  img{
+    transition: all 0.3s;
+  }
+
+  .titre-image{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 0.3s;
+  }
+}
+
+/* CSS pour la galerie d'images */
+.gallery-image {
+  width: 100%; /* La largeur de l'image est définie à 100% */
+  height: auto; /* La hauteur est ajustée automatiquement pour conserver les proportions */
+  object-fit: cover; /* Pour s'assurer que l'image couvre toute la zone définie */
+  max-height: 250px; /* Taille maximale souhaitée pour les images, ajustez selon vos besoins */
+}
+
+.visitor-reviews {
+  background-color: #f8f9fa;
+  padding: 40px 0;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #555;
+}
+
+.rating .star {
+  color: #ffc107; /* Couleur des étoiles */
+  font-size: 1.5rem;
+  margin-right: 5px;
+}
+
+.zoo-presentation {
+  background-color: #f8f9fa;
+  padding: 40px 0;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-header p {
+  font-size: 1.25rem;
+  color: #555;
+}
+
+h3 {
+  font-size: 1.75rem;
+  margin-top: 20px;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+ul li {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.img-fluid {
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.text-center {
+  font-size: 1rem;
+  font-weight: bold;
+}
