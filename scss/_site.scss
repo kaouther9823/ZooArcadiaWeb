@@ -16,6 +16,11 @@
 }
 
 @font-face {
+  font-family: Neucha;
+  src: url(font/Neucha-Regular.ttf);
+}
+
+@font-face {
   font-family: 'FontAwesome';
   src: url('../node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2') format('woff2'),
   url('../node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.ttf') format('woff');
@@ -101,7 +106,7 @@ body {
       opacity: 1;
     }
     img{
-      filter: brightness(0.3);
+     filter: brightness(0.3);
     }
   }
 
@@ -121,17 +126,21 @@ body {
 
 /* CSS pour la galerie d'images */
 .gallery-image {
-  width: 100%; /* La largeur de l'image est définie à 100% */
-  height: auto; /* La hauteur est ajustée automatiquement pour conserver les proportions */
+ width: 100%; /* La largeur de l'image est définie à 100% */
+  height: 100%; /* La hauteur est ajustée automatiquement pour conserver les proportions */
   object-fit: cover; /* Pour s'assurer que l'image couvre toute la zone définie */
-  max-height: 250px; /* Taille maximale souhaitée pour les images, ajustez selon vos besoins */
+ max-height: 250px; /* Taille maximale souhaitée pour les images, ajustez selon vos besoins */
+  display: block;
 }
 
 .visitor-reviews {
   background-color: #f8f9fa;
-  padding: 40px 0;
+  padding-bottom: 30px;
 }
-
+.pres h2 {
+  font-family: Neucha, sans-serif;
+  color: #25b2a2;
+}
 .section-header h2 {
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
@@ -170,7 +179,7 @@ body {
 
 .zoo-presentation {
   background-color: #f8f9fa;
-  padding: 40px 0;
+  padding-top: 30px;
 }
 
 .section-header p {
@@ -183,18 +192,24 @@ h3 {
   margin-top: 20px;
  // background-color: #E8F5E9;
 }
-
+.pres h3 {
+  font-family: Neucha, sans-serif;
+  color: #25b2a2;
+}
 ul {
   padding-left: 20px;
 }
 
 ul li {
-  font-size: 1.25rem;
+  //font-size: 1.25rem;
   margin-bottom: 0.5rem;
+}
+.without-dot {
+  list-style-type: none;
 }
 
 .img-fluid {
-  max-height: 200px;
+  max-height: 400px;
   object-fit: cover;
 }
 
@@ -313,4 +328,51 @@ ul li {
   background-color: #f8f9fa; /* Couleur de fond personnalisée */
   margin: 20px 0; /* Marge personnalisée */
   padding: 20px;
+}
+
+.image-card-col1, .image-card-col2, .image-card-col3 {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-card-col1 .gallery-image, .image-card-col2 .gallery-image, .image-card-col3 .gallery-image {
+  width: 100%;
+  display: block;
+}
+
+.image-card-col1 .overlay, .image-card-col2 .overlay, .image-card-col3 .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(51, 175, 109, 0.0); /* Overlay initial transparent */
+  transition: background-color 0.3s ease; /* Transition douce pour le changement de couleur */
+  border-radius: var(--bs-border-radius) !important;
+  z-index: 1;
+}
+
+.image-card-col1:hover .overlay {
+  background-color: rgba(51, 175, 109, 0.6); /* Couleur et opacité de l'overlay au survol */
+}
+
+.image-card-col2:hover .overlay {
+  background-color: rgba(223,82,0,.5);
+}
+
+.image-card-col3:hover .overlay {
+  background-color: rgba(0,114,189,.5); /* Couleur et opacité de l'overlay au survol */
+}
+.image-card-col1 .titre-image, .image-card-col2 .titre-image, .image-card-col3 .titre-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.image-card-col1:hover .titre-image, .image-card-col2:hover .titre-image, .image-card-col3:hover .titre-image {
+  opacity: 1;
 }
