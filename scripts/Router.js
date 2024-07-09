@@ -1,6 +1,7 @@
 import Route from "./Route.js";
 import {allRoutes, websiteName} from "./allRoutes.js";
-
+import {} from "./visiteur/service.js"
+import {} from "./entities/service.js"
 // Création d'une route pour la page 404 (page introuvable)
 const route404 = new Route("404", "Page introuvable", "/pages/404.html");
 
@@ -29,6 +30,14 @@ const LoadContentPage = async () => {
     // Récupération du contenu HTML de la route
     // Ajout du contenu HTML à l'élément avec l'ID "main-page"
     document.getElementById("main-page").innerHTML = await fetch(actualRoute.pathHtml).then((data) => data.text());
+
+    if (actualRoute.url.includes("/admin/")) {
+        document.getElementById("carousel").style.display="none";
+        document.getElementById("zooFooter").style.display="none";
+    } else {
+        document.getElementById("carousel").style.display="block";
+        document.getElementById("zooFooter").style.display="block";
+    }
 
     // Ajout du contenu JavaScript
     if (actualRoute.pathJS !== "") {
