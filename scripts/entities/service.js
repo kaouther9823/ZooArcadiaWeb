@@ -1,4 +1,5 @@
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
+//import {API_BASE_URL} from '/scripts/common/api.js';
+let API_BASE_URL = "http://localhost:8001/api";
 const api = {
     get: function (url) {
         return fetch(`${API_BASE_URL}${url}`).then(response => response.json());
@@ -28,12 +29,12 @@ const api = {
     }
 };
 
-document.addEventListener('DOMContentLoaded', function () {
+/*document.addEventListener('DOMContentLoaded', function () {
     if (location.pathname === "/admin/services") {
         console.log("dom content loaded succefully!")
         fetchServices();
     }
-});
+});*/
 
 function editService(id) {
     api.get(`/services/${id}`)
@@ -54,8 +55,8 @@ function editService(id) {
         });
 }
 
-function fetchServices() {
-    api.get('/services')
+export function fetchServices() {
+    api.get(`/services/`)
         .then(services => {
             let rows = '';
             services.forEach(service => {

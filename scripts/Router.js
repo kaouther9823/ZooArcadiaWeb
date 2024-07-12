@@ -1,19 +1,30 @@
 import Route from "./Route.js";
 import {allRoutes, websiteName} from "./allRoutes.js";
-import {} from "./visiteur/service.js"
-import {} from "./entities/service.js"
+
 // Création d'une route pour la page 404 (page introuvable)
 const route404 = new Route("404", "Page introuvable", "/pages/404.html");
 
 // Fonction pour récupérer la route correspondant à une URL donnée
 const getRouteByUrl = (url) => {
     let currentRoute = null;
+    let isForm = false;
+    let urlRoute = url;
     // Parcours de toutes les routes pour trouver la correspondance
-    allRoutes.forEach((element) => {
-        if (element.url === url) {
-            currentRoute = element;
-        }
-    });
+    const urlArray = url.split("/");
+    const lastElement = urlArray[urlArray.length - 1];
+    if (!isNaN(lastElement) && lastElement !== "") {
+        urlRoute = url.replace(lastElement, "${id}");
+        isForm = true
+    }
+        allRoutes.forEach((element) => {
+            if (element.url === urlRoute) {
+                currentRoute = element;
+                if (isForm){
+                    currentRoute.url = url;
+                }
+            }
+        });
+
     // Si aucune correspondance n'est trouvée, on retourne la route 404
     if (currentRoute != null) {
         return currentRoute;
@@ -40,14 +51,16 @@ const LoadContentPage = async () => {
     }
 
     // Ajout du contenu JavaScript
-    if (actualRoute.pathJS !== "") {
+    if (actualRoute.pathJS !== []) {
         // Création d'une balise script
-        var scriptTag = document.createElement("script");
-        scriptTag.setAttribute("type", "text/javascript");
-        scriptTag.setAttribute("src", actualRoute.pathJS);
-
+        actualRoute.pathJS.forEach(pathScript => {
+            let scriptTag = document.createElement("script");
+            scriptTag.setAttribute("type", "text/javascript");
+            scriptTag.setAttribute("src", pathScript);
+            document.querySelector("body").appendChild(scriptTag);
+        })
         // Ajout de la balise script au corps du document
-        document.querySelector("body").appendChild(scriptTag);
+
     }
 
     // Changement du titre de la page

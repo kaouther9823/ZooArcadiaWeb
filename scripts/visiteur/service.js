@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
+let API_BASE_URL = "http://localhost:8001/api";
 const api = {
     get: function (url) {
         return fetch(`${API_BASE_URL}${url}`).then(response => response.json());
@@ -6,16 +6,18 @@ const api = {
 
 };
 
+/*
 document.addEventListener('DOMContentLoaded', function () {
     if (location.pathname === "/services") {
         console.log("dom content loaded succefully!")
         fetchServicesForVisitor();
     }
 });
+*/
 
 
-function fetchServicesForVisitor() {
-    api.get('/services')
+export function fetchServicesForVisitor() {
+    api.get(`/services`)
         .then(services => {
             let rows = '';
             let index = 0;

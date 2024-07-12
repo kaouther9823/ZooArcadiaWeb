@@ -1,0 +1,76 @@
+<div class="container">
+    <div class="section-header text-center mb-4 pres">
+        <h2 id="nomHabitat"></h2>
+    </div>
+    <div class="row p-3">
+
+    </div>
+    <div class="row">
+        <div class=" mb-3">
+            <label class="form-label" for="idHabitat" hidden>Id</label>
+            <input class="form-control" type="text" id="idHabitat" name="idHabitat" readonly hidden>
+            <label class="form-label" for="nom">Nom</label>
+            <input class="form-control" type="text" id="nom" name="nom" required>
+            <label class="form-label" for="description">Description</label>
+            <textarea class="form-control auto-height" id="description" name="description" required></textarea>
+            <label class="form-label" for="habitat-images">Ajouter des images</label>
+            <input class="form-control" type="file" id="habitat-images" name="habitat-images" accept="image/*" multiple required>
+        </div>
+    </div>
+    <div class="row row-cols-2 row-cols-lg-2" id="listImages">
+
+    </div>
+    <div class="row p-3">
+        <div class="col text-end">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#animalModal">
+                Nouvel animal
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <table id="animalTable" class="table table-striped nowrap w-100">
+            <thead>
+            <tr>
+                <th>Prénom</th>
+                <th>Race</th>
+                <th>Etat</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="animalModal" tabindex="-1" aria-labelledby="animalModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="animalModalLabel">Ajouter un Animal</h1>
+                        <button type="button" id="btn-close-animal-modal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body mb-3">
+                    <label class="form-label" for="animal-id" hidden>Id</label>
+                    <input class="form-control" type="text" id="animal-id" name="animal-id" hidden>
+                    <label class="form-label" for="animal-prenom">Prénom</label>
+                    <input class="form-control" type="text" id="animal-prenom" name="animal-prenom" required>
+                    <label class="form-label" for="animal-race">Race</label>
+                    <select class="form-select" id="animal-race" name="animal-race" aria-label="Default select example"></select>
+                    <label class="form-label" for="animal-etat">Etat</label>
+                    <select class="form-select" id="animal-etat" name="animal-etat" aria-label="Default select example"></select>
+                    <label class="form-label" for="animal-images">Images</label>
+                    <input class="form-control" type="file" id="animal-images" name="animal-images" accept="image/*" multiple required>
+                    <div id="uploadResultForAdd"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button id="addAnimalBtn" type="submit" onclick="addAnimal()" class="btn btn-primary">Valider</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
