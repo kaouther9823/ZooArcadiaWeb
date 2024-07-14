@@ -29,18 +29,24 @@
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter un Habitat</h1>
                         <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <form id="habitatForm" class="row g-3 needs-validation" novalidate>
                     <div class="modal-body mb-3">
                         <label class="form-label" for="add-name">Name</label>
                         <input class="form-control" type="text" id="add-name" name="add-name" required>
+                        <div class="invalid-feedback">Veuillez entrer un nom.</div>
+
                         <label class="form-label" for="add-description">Description</label>
                         <textarea class="form-control auto-height" id="add-description" name="add-description" required></textarea>
+                        <div class="invalid-feedback">Veuillez entrer une description.</div>
+
                         <label class="form-label" for="add-images">Images</label>
                         <input class="form-control" type="file" id="add-images" name="add-images" accept="image/*" multiple required>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="button" onclick="resetForm()"  class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                         <button type="submit" onclick="addHabitat()" class="btn btn-primary">Valider</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>

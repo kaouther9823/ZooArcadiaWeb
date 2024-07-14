@@ -52,6 +52,7 @@
                         <h1 class="modal-title fs-5" id="animalModalLabel">Ajouter un Animal</h1>
                         <button type="button" id="btn-close-animal-modal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <form id="animalForm" class="row g-3 needs-validation" novalidate>
                     <div class="modal-body mb-3">
                     <label class="form-label" for="animal-id" hidden>Id</label>
                     <input class="form-control" type="text" id="animal-id" name="animal-id" hidden>
@@ -66,9 +67,10 @@
                     <div id="uploadResultForAdd"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="reset" onclick="resetForm()" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                         <button id="addAnimalBtn" type="submit" onclick="addAnimal()" class="btn btn-primary">Valider</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -1,12 +1,12 @@
 import {api, API_BASE_URL} from '/scripts/common/api.js';
 
-function editService(id) {
+export function editService(id) {
     api.get(`/services/${id}`)
         .then(service => {
             document.getElementById('edit-id').value = service.serviceId;
             document.getElementById('edit-nom').value = service.nom;
             document.getElementById('edit-description').value = service.description;
-            var editModal = new bootstrap.Modal(document.getElementById('editModal'), {
+            const editModal = new bootstrap.Modal(document.getElementById('editModal'), {
                 keyboard: false
             });
             editModal.show();
@@ -46,10 +46,10 @@ export function fetchServices() {
         });
 }
 
-function deleteService(id) {
+export function deleteService(id) {
     if (confirm('Êtes-vous sûr de vouloir supprimer ce service ?')) {
         api.delete(`/services/${id}`)
-            .then(data => {
+            .then(() => {
                 fetchServices();
             })
             .catch(error => {
@@ -58,43 +58,52 @@ function deleteService(id) {
     }
 }
 
-function addService() {
-    const nameInputText = document.getElementById("add-name");
-    const descriptionInputText = document.getElementById("add-description");
-    // upload images
-    const formData = new FormData();
-    const files = document.getElementById('add-images').files;
-    formData.append('image', files[0]);
-    formData.append('imageName', files[0].name);
+export function addService() {
+    event.preventDefault(); // Empêche la soumission par défaut
 
-    fetch(`${API_BASE_URL}/images/upload`, {
-        method: 'POST',
-        body: formData
-    })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('uploadResult').innerHTML = `<div class="alert alert-success">Images uploaded successfully!</div>`;
-            const item = {
-                nom: nameInputText.value.trim(),
-                description: descriptionInputText.value.trim(),
-                imagePath: 'services/' + data.filename
-            };
-            api.post(`/services/`, item)
-                .then(data => {
-                    fetchServices();
-                    document.getElementById("btn-close").click();
-                })
-                .catch(error => {
-                    console.error('There was an error!', error);
-                });
+    const form = document.getElementById('serviceForm');
+    if (form.checkValidity() === false) {
+        event.stopPropagation();
+    } else {
+        const nameInputText = document.getElementById("add-name");
+        const descriptionInputText = document.getElementById("add-description");
+        // upload images
+        const formData = new FormData();
+        const files = document.getElementById('add-images').files;
+        formData.append('image', files[0]);
+        formData.append('imageName', files[0].name);
+
+        fetch(`${API_BASE_URL}/images/upload`, {
+            method: 'POST',
+            body: formData
         })
-        .catch(error => {
-            document.getElementById('uploadResult').innerHTML = `<div class="alert alert-danger">Error uploading images.</div>`;
-            console.error('Error:', error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('uploadResult').innerHTML = `<div class="alert alert-success">Images uploaded successfully!</div>`;
+                const item = {
+                    nom: nameInputText.value.trim(),
+                    description: descriptionInputText.value.trim(),
+                    imagePath: 'services/' + data.filename
+                };
+                api.post(`/services/`, item)
+                    .then(() => {
+                        form.reset();
+                        form.classList.remove('was-validated')
+                        fetchServices();
+                        document.getElementById("btn-close").click();
+                    })
+                    .catch(error => {
+                        console.error('There was an error!', error);
+                    });
+            })
+            .catch(error => {
+                document.getElementById('uploadResult').innerHTML = `<div class="alert alert-danger">Error uploading images.</div>`;
+                console.error('Error:', error);
+            });
+    }
+    form.classList.add('was-validated');
 }
-
-function updateService() {
+export function updateService() {
     const idInputText = document.getElementById("edit-id");
     const nameInputText = document.getElementById("edit-nom");
     const descriptionInputText = document.getElementById("edit-description");
@@ -121,7 +130,7 @@ function updateService() {
                 imagePath: 'services/' + data.filename
             };
             api.put(`/services/${idInputText.value}`, item)
-                .then(data => {
+                .then(() => {
                     fetchServices();
                     document.getElementById("btn-close").click();
                 })

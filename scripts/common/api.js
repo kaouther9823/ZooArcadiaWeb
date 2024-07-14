@@ -27,7 +27,7 @@ export const api = {
     delete: function(url) {
         return fetch(`${API_BASE_URL}${url}`, {
             method: 'DELETE'
-        }).then(response => response.json());
+        }).then();
     },
     uploadImages: function (url, formData) {
         console.log(formData);
@@ -37,10 +37,8 @@ export const api = {
         })
             .then(data => {
                 data.json();
-                document.getElementById('uploadResult').innerHTML = `<div class="alert alert-success">Images uploaded successfully!</div>`;
             })
             .catch(error => {
-                document.getElementById('uploadResult').innerHTML = `<div class="alert alert-danger">Error uploading images.</div>`;
                 console.error('Error:', error);
             });
     }

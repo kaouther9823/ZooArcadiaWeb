@@ -129,66 +129,76 @@ function getImageById(id){
 
 }
 export function addAnimal() {
-    const urlArray = location.pathname.split("/");
-    const idHabitat = urlArray[urlArray.length - 1];
-    if (!isNaN(idHabitat) && idHabitat !== "") {
-        const name = document.getElementById("animal-prenom");
-        const race = document.getElementById("animal-race");
-        const idAnimalInput = document.getElementById("animal-id");
-        var value = race.options[race.selectedIndex].value;
-        var text = race.options[race.selectedIndex].text;
+    event.preventDefault(); // Empêche la soumission par défaut
 
-        const etat = document.getElementById("animal-etat");
-        var valueEtat = etat.options[etat.selectedIndex].value;
-        var textEtat = etat.options[etat.selectedIndex].text;
-        // upload images
-        const formData = new FormData();
-        const files = document.getElementById('animal-images').files;
-        for (let i = 0; i < files.length; i++) {
-            formData.append('images[]', files[i]);
-        }
-        const item = {
-            prenom: name.value.trim(),
-            etatId: etat.value.trim(),
-            raceId: race.value.trim(),
-            habitatId: idHabitat,
-        };
-        const idAnimal = idAnimalInput.value.trim();
-        if (idAnimal && idAnimal !== "") {
-        api.put(`/animaux/${idAnimal}`, item)
-           // .then(response => response.json())
-            .then(data => {
-                if (formData || formData.entries().next().value) {
-                    api.uploadImages(`/animaux/${data.id}/upload`, formData)
-                        .then(response => console.log(response))
-                        .catch(error => {
-                            console.error('There was an error!', error);
-                        });
-                }
-                fetchAnimaux();
-                document.getElementById("btn-close-animal-modal").click();
-            })
-            .catch(error => {
-                console.error('There was an error!', error);
-            });
+    const form = document.getElementById('animalForm');
+    if (form.checkValidity() === false) {
+        event.stopPropagation();
     } else {
-            api.post(`/animaux/`, item)
-                // .then(response => response.json())
-                .then(data => {
-                    if (formData.length > 0) {
-                        api.uploadImages(`/animaux/${data.id}/upload`, formData)
-                            .then(response => console.log(response))
-                            .catch(error => {
-                                console.error('There was an error!', error);
-                            });
-                    }
-                    fetchAnimaux();
-                    document.getElementById("btn-close-animal-modal").click();
-                })
-                .catch(error => {
-                    console.error('There was an error!', error);
-                });
+        const urlArray = location.pathname.split("/");
+        const idHabitat = urlArray[urlArray.length - 1];
+        if (!isNaN(idHabitat) && idHabitat !== "") {
+            const name = document.getElementById("animal-prenom");
+            const race = document.getElementById("animal-race");
+            const idAnimalInput = document.getElementById("animal-id");
+            var value = race.options[race.selectedIndex].value;
+            var text = race.options[race.selectedIndex].text;
+
+            const etat = document.getElementById("animal-etat");
+            var valueEtat = etat.options[etat.selectedIndex].value;
+            var textEtat = etat.options[etat.selectedIndex].text;
+            // upload images
+            const formData = new FormData();
+            const files = document.getElementById('animal-images').files;
+            for (let i = 0; i < files.length; i++) {
+                formData.append('images[]', files[i]);
+            }
+            const item = {
+                prenom: name.value.trim(),
+                etatId: etat.value.trim(),
+                raceId: race.value.trim(),
+                habitatId: idHabitat,
+            };
+            const idAnimal = idAnimalInput.value.trim();
+            if (idAnimal && idAnimal !== "") {
+                api.put(`/animaux/${idAnimal}`, item)
+                    // .then(response => response.json())
+                    .then(data => {
+                        if (formData || formData.entries().next().value) {
+                            api.uploadImages(`/animaux/${data.id}/upload`, formData)
+                                .then(response => console.log(response))
+                                .catch(error => {
+                                    console.error('There was an error!', error);
+                                });
+                        }
+                        fetchAnimaux();
+                        document.getElementById("btn-close-animal-modal").click();
+                    })
+                    .catch(error => {
+                        console.error('There was an error!', error);
+                    });
+            } else {
+                api.post(`/animaux/`, item)
+                    // .then(response => response.json())
+                    .then(data => {
+                        if (formData || formData.entries().next().value) {
+                            api.uploadImages(`/animaux/${data.id}/upload`, formData)
+                                .then(response => console.log(response))
+                                .catch(error => {
+                                    console.error('There was an error!', error);
+                                });
+                        }
+                        form.reset();
+                        form.classList.remove('was-validated')
+                        fetchAnimaux();
+                        document.getElementById("btn-close-animal-modal").click();
+                    })
+                    .catch(error => {
+                        console.error('There was an error!', error);
+                    });
+            }
         }
     }
+    form.classList.add('was-validated');
 }
-//window.addAnimal=addAnimal();
+

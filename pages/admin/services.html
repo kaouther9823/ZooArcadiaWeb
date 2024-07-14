@@ -29,20 +29,25 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter un Service</h1>
-                        <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                     </div>
-                    <div class="modal-body mb-3">
-                        <label class="form-label" for="add-name">Name</label>
-                        <input class="form-control" type="text" id="add-name" name="add-name" required>
-                        <label class="form-label" for="add-description">Description</label>
-                        <textarea class="form-control auto-height" id="add-description" name="add-description" required></textarea>
-                        <label class="form-label" for="add-images">Images</label>
-                        <input class="form-control" type="file" id="add-images" name="add-images" accept="image/*" required>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" onclick="addService()" class="btn btn-primary">Save changes</button>
-                    </div>
+                    <form id="serviceForm" class="row g-3 needs-validation" novalidate>
+                        <div class="modal-body mb-3">
+                            <label class="form-label" for="add-name">Name</label>
+                            <input class="form-control" type="text" id="add-name" name="add-name" required>
+                            <label class="form-label" for="add-description">Description</label>
+                            <textarea class="form-control auto-height" id="add-description" name="add-description"
+                                      required></textarea>
+                            <label class="form-label" for="add-images">Images</label>
+                            <input class="form-control" type="file" id="add-images" name="add-images" accept="image/*"
+                                   required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" onclick="resetForm()" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" onclick="addService()" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -55,7 +60,8 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="editModalLabel">Editer un Service</h1>
-                        <button type="button" class="btn-close" id="btn-close-edit" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" id="btn-close-edit" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                     </div>
                     <div class="modal-body mb-3">
                         <label class="form-label" for="edit-id" hidden>Name</label>
@@ -63,7 +69,8 @@
                         <label class="form-label" for="edit-nom">Name</label>
                         <input class="form-control" type="text" id="edit-nom" name="edit-nom" required>
                         <label class="form-label auto-height" for="edit-description">Description</label>
-                        <textarea class="form-control" id="edit-description" name="edit-description" required></textarea>
+                        <textarea class="form-control" id="edit-description" name="edit-description"
+                                  required></textarea>
                         <label class="form-label" for="edit-images">Image</label>
                         <input class="form-control" type="file" id="edit-images" name="edit-images" accept="image/*">
 
