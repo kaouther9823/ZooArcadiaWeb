@@ -1,0 +1,82 @@
+<div class="container">
+    <!-- Button trigger modal -->
+    <div class="row p-3">
+        <div class="col text-end">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+            Nouvel Animal
+        </button>
+        </div>
+    </div>
+    <div class="row">
+        <table id="animalTable" class="table table-striped nowrap w-100">
+            <thead>
+            <tr>
+                <th>Preom</th>
+                <th>Race</th>
+                <th>Etat</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody id="animalRows">
+            </tbody>
+        </table>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter un Animal</h1>
+                        <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body mb-3">
+                        <label class="form-label" for="add-prenom">Prénom</label>
+                        <input class="form-control" type="text" id="add-prenom" name="add-prenom" required>
+                        <label class="form-label" for="add-race">Race</label>
+                        <select class="form-select" id="add-race" name="add-race" aria-label="Default select example"></select>
+                        <label class="form-label" for="add-etat">Etat</label>
+                            <select class="form-select" id="add-etat" name="add-etat" aria-label="Default select example"></select>
+                        <label class="form-label" for="add-images">Images</label>
+                        <input class="form-control" type="file" id="add-images" name="add-images" accept="image/*" required>
+                        <div id="uploadResultForAdd"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" onclick="addAnimal()" class="btn btn-primary">Valider</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="editModalLabel">Editer un Service</h1>
+                        <button type="button" class="btn-close" id="btn-close-edit" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body mb-3">
+                        <label class="form-label" for="edit-prenom">Prénom</label>
+                        <input class="form-control" type="text" id="edit-prenom" name="edit-prenom" required>
+                        <label class="form-label" for="edit-race">Race</label>
+                        <select class="form-select" id="edit-race" name="edit-race" aria-label="Default select example"></select>
+                        <label class="form-label" for="edit-etat">Etat</label>
+                        <select class="form-select" id="edit-etat" name="edit-etat" aria-label="Default select example"></select>
+                        <label class="form-label" for="edit-images">Images</label>
+                        <input class="form-control" type="file" id="edit-images" name="edit-images" accept="image/*" required>
+                        <div id="uploadResultForEdit"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" onclick="updateService()" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

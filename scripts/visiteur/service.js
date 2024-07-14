@@ -1,18 +1,4 @@
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
-const api = {
-    get: function (url) {
-        return fetch(`${API_BASE_URL}${url}`).then(response => response.json());
-    },
-
-};
-
-document.addEventListener('DOMContentLoaded', function () {
-    if (location.pathname === "/services") {
-        console.log("dom content loaded succefully!")
-        fetchServicesForVisitor();
-    }
-});
-
+import { api } from "/scripts/common/api.js"
 
 function fetchServicesForVisitor() {
     api.get('/services')
