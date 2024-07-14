@@ -1,0 +1,37 @@
+<!-- Section Contact -->
+<section class="py-3">
+    <div class="container">
+        <div class="section-header text-center mb-4 pres">
+            <h2>Nous apprécierions votre avis</h2>
+        </div>
+        <form>
+            <div class="form-row">
+                <div class="form-group mb-3">
+                    <label for="inputName">Nom</label>
+                    <input type="text" class="form-control" id="inputName" placeholder="Votre nom">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="evaluation">Évaluation:</label>
+                    <div id="star-rating" class="star-rating">
+                        <i class="fa fa-star" data-value="1"></i>
+                        <i class="fa fa-star" data-value="2"></i>
+                        <i class="fa fa-star" data-value="3"></i>
+                        <i class="fa fa-star" data-value="4"></i>
+                        <i class="fa fa-star" data-value="5"></i>
+                    </div>
+                    <input type="hidden" id="evaluation" name="evaluation" required>
+                </div>
+                <div class="form-group">
+                    <label for="commentaire">Commentaire:</label>
+                    <textarea id="commentaire" name="commentaire" class="form-control" required></textarea>
+                </div>
+                <div class="text-center pt-3">
+                    <button type="submit" class="btn btn-primary">Soumettre</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+
