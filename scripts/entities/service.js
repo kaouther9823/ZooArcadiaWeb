@@ -16,8 +16,9 @@ export function editService(id) {
         });
 }
 
-export function fetchServices() {
-    api.get(`/services/`)
+
+function fetchServices() {
+    api.get('/services')
         .then(services => {
             let rows = '';
             services.forEach(service => {
@@ -39,6 +40,7 @@ export function fetchServices() {
                     </tr>
                 `;
             });
+
             document.getElementById('serviceRows').innerHTML = rows;
         })
         .catch(error => {
@@ -60,7 +62,6 @@ export function deleteService(id) {
 
 export function addService() {
     event.preventDefault(); // Empêche la soumission par défaut
-
     const form = document.getElementById('serviceForm');
     if (form.checkValidity() === false) {
         event.stopPropagation();
