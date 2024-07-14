@@ -1,47 +1,8 @@
-//import {API_BASE_URL} from '/scripts/common/api.js';
-let API_BASE_URL = "http://localhost:8001/api";
-const api = {
-    get: function (url) {
-        return fetch(`${API_BASE_URL}${url}`).then(response => response.json());
-    },
-    post: function (url, data) {
-        return fetch(`${API_BASE_URL}${url}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(response => response.json());
-    },
-    put: function (url, data) {
-        return fetch(`${API_BASE_URL}${url}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(response => response.json());
-    },
-    delete: function (url) {
-        return fetch(`${API_BASE_URL}${url}`, {
-            method: 'DELETE'
-        }).then();
-    }
-};
-
-/*document.addEventListener('DOMContentLoaded', function () {
-    if (location.pathname === "/admin/services") {
-        console.log("dom content loaded succefully!")
-        fetchServices();
-    }
-});*/
+import {api, API_BASE_URL} from '/scripts/common/api.js';
 
 function editService(id) {
     api.get(`/services/${id}`)
         .then(service => {
-            console.log(document.getElementById('edit-id'));
-            console.log(document.getElementById('edit-nom'));
-            console.log(document.getElementById('edit-description'));
             document.getElementById('edit-id').value = service.serviceId;
             document.getElementById('edit-nom').value = service.nom;
             document.getElementById('edit-description').value = service.description;
@@ -78,7 +39,7 @@ export function fetchServices() {
                     </tr>
                 `;
             });
-            document.getElementById('serviceTable').innerHTML = rows;
+            document.getElementById('serviceRows').innerHTML = rows;
         })
         .catch(error => {
             console.error('There was an error!', error);

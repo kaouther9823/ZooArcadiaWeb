@@ -1,97 +1,12 @@
-let API_BASE_URL = "http://localhost:8001/api";
-const api = {
-    get: function (url) {
-        return fetch(`${API_BASE_URL}${url}`).then(response => response.json());
-    },
-    post: function (url, data) {
-        return fetch(`${API_BASE_URL}${url}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(response => response.json());
-    },
-    put: function (url, data) {
-        return fetch(`${API_BASE_URL}${url}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(response => response.json());
-    },
-    delete: function (url) {
-        return fetch(`${API_BASE_URL}${url}`, {
-            method: 'DELETE'
-        }).then();
-    },
-    uploadImages: function (url, formData) {
-        console.log(formData);
-        return     fetch(`${API_BASE_URL}${url}`, {
-            method: 'POST',
-            body: formData
-        })
-            .then(data => {
-                data.json();
-                document.getElementById('uploadResult').innerHTML = `<div class="alert alert-success">Images uploaded successfully!</div>`;
-            })
-            .catch(error => {
-                document.getElementById('uploadResult').innerHTML = `<div class="alert alert-danger">Error uploading images.</div>`;
-                console.error('Error:', error);
-            });
-    }
-
-};
-
-export function fetchEtat() {
-    fetch(`${API_BASE_URL}/etats`)  // Assurez-vous que l'URL de l'API est correcte
-        .then(response => response.json())
-        .then(data => {
-            const etatSelect = document.getElementById('animal-etat');
-            etatSelect.innerHTML = ''; // Clear the select element
-            data.forEach(etat => {
-                const option = document.createElement('option');
-                option.value = etat.etatId;
-                option.textContent = etat.label;
-                etatSelect.appendChild(option);
-            });
-        })
-        .catch(error => {
-            console.error('Erreur lors de la récupération des etats:', error);
-            const etatSelect = document.getElementById('animal-etat');
-            etatSelect.innerHTML = '<option value="">Erreur de chargement</option>';
-        });
-}
-
-
-export function fetchRaces() {
-    fetch(`${API_BASE_URL}/races`)  // Assurez-vous que l'URL de l'API est correcte
-        .then(response => response.json())
-        .then(data => {
-            const raceSelect = document.getElementById('animal-race');
-            raceSelect.innerHTML = ''; // Clear the select element
-            data.forEach(race => {
-                const option = document.createElement('option');
-                option.value = race.raceId;
-                option.textContent = race.label;
-                raceSelect.appendChild(option);
-            });
-        })
-        .catch(error => {
-            console.error('Erreur lors de la récupération des races:', error);
-            const raceSelect = document.getElementById('animal-race');
-            raceSelect.innerHTML = '<option value="">Erreur de chargement</option>';
-        });
-}
+import { api, API_BASE_URL } from '/scripts/common/api.js';
 
 export function editAnimal(id) {
     api.get(`/animaux/${id}`)
         .then(animal => {
             document.getElementById('animal-id').value = animal.id;
             document.getElementById('animal-prenom').value = animal.prenom;
-            document.getElementById('animal-etat').value = animal.etat.etatId;
-            document.getElementById('animal-race').value = animal.race.raceId;
+            document.getElementById('animal-etat').value = animal.etat.Id;
+            document.getElementById('animal-race').value = animal.race.Id;
             var animalModal = new bootstrap.Modal(document.getElementById('animalModal'), {
                 keyboard: false
             });
@@ -127,7 +42,7 @@ export function fetchAnimaux(habitatId) {
                         </div>
                         </td>
                     </tr>`;
-                    document.getElementById('animalTable').innerHTML = rows;
+                    document.getElementById('animalRows').innerHTML = rows;
                     listImagesByAnimal(animal.id).then(data => {
                         if (data && data.length > 0) {
                             const imageId = data[0].imageId;

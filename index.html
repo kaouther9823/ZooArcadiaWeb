@@ -41,6 +41,9 @@
                     <a class="nav-link" href="/connexion">Connexion</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/avis">Avis</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/contact">Contact</a>
                 </li>
                 <li class="nav-item dropdown">
@@ -50,8 +53,15 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/admin/services">Service</a></li>
                         <li><a class="dropdown-item" href="/admin/habitats">Habitats</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Soins et suivi
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/veterinaire/rapports">Rapports</a></li>
                     </ul>
                 </li>
             </ul>
@@ -200,7 +210,8 @@
 <script type="module" src="/scripts/Router.js" defer></script>
 <script type="module" src="/scripts/main.js" defer></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+
+        document.addEventListener('DOMContentLoaded', function() {
         var carouselElement = document.getElementById('carousel');
 
         if (carouselElement) {
@@ -210,10 +221,7 @@
             console.error('Carousel element not found');
         }
     });
+
 </script>
-
-
-
-
 </body>
 </html>
