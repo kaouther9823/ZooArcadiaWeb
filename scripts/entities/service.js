@@ -17,7 +17,7 @@ export function editService(id) {
 }
 
 
-function fetchServices() {
+export function fetchServices() {
     api.get('/services')
         .then(services => {
             let rows = '';
@@ -40,7 +40,6 @@ function fetchServices() {
                     </tr>
                 `;
             });
-
             document.getElementById('serviceRows').innerHTML = rows;
         })
         .catch(error => {

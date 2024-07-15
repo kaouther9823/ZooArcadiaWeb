@@ -1,0 +1,62 @@
+<!-- Section Contact -->
+<section class="py-3">
+    <div class="container">
+        <div class="section-header text-center mb-4 pres">
+            <h2>Nous apprécierions votre avis</h2>
+        </div>
+<form id="ratingForm">
+            <div class="form-row">
+                <div class="form-group mb-3">
+                    <label for="pseudo">Nom</label>
+                    <input type="text" class="form-control" id="pseudo" placeholder="Votre nom" required>
+                </div>
+<!--                <div class="form-group mb-3">
+                    <label for="evaluation">Évaluation:</label>
+                    <div id="star-rating" class="star-rating">
+                        <i class="fa fa-star" data-value="1" onclick="rate(event)"></i>
+                        <i class="fa fa-star" data-value="2" onclick="rate(event)"></i>
+                        <i class="fa fa-star" data-value="3" onclick="rate(event)"></i>
+                        <i class="fa fa-star" data-value="4" onclick="rate(event)"></i>
+                        <i class="fa fa-star" data-value="5" onclick="rate(event)"></i>
+                    </div>
+
+                    <div class="rating">
+                        <span class="selected">&#9733;</span>
+                        <span class="selected">&#9733;</span>
+                        <span class="selected">&#9733;</span>
+                        <span class="unselected">&#9734;</span>
+                        <span class="unselected">&#9734;</span>
+                    </div>
+                    <input type="hidden" id="evaluation" name="evaluation" required>
+                </div>-->
+                <div class="form-group mb-3">
+                    <label for="evaluation">Évaluation</label>
+                <div id="evaluation" class="form-group rating">
+                    <input type="radio" id="star5" name="rating" value="5">
+                    <label class="selected" for="star5" title="5 stars">&#9733;</label>
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label class="selected" for="star4" title="4 stars">&#9733;</label>
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label class="selected" for="star3" title="3 stars">&#9733;</label>
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label class="selected" for="star2" title="2 stars">&#9733;</label>
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label class="selected" for="star1" title="1 star">&#9733;</label>
+                </div>
+                <div class="form-group">
+                    <label for="commentaire">Commentaire</label>
+                    <textarea id="commentaire" name="commentaire" class="form-control" required></textarea>
+                </div>
+                <div class="text-center pt-3">
+                    <button type="submit" class="btn btn-primary" onclick="saveAvis()">Soumettre</button>
+                </div>
+                <div class="form-group">
+                    <p id="responseAvis"></p>
+                </div>
+            </div>
+</form>
+    </div>
+</section>
+
+
+

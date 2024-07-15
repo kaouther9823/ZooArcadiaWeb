@@ -185,6 +185,18 @@ body {
   margin-right: 5px;
 }
 
+.rating .selected {
+  color: #ffc107; /* Couleur des étoiles */
+  font-size: 1.5rem;
+  margin-right: 5px;
+}
+
+.rating .unselected {
+  font-size: 1.5rem;
+  margin-right: 5px;
+}
+
+
 .zoo-presentation {
   background-color: #f8f9fa;
   padding-top: 30px;
@@ -386,4 +398,39 @@ ul li {
 }
 .auto-height{
   height: auto;
+}
+
+.rating-container {
+  text-align: center;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  font-size: 30px;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.rating input:checked ~ label,
+.rating input:checked + label ~ label {
+  color: #f5b301;
+}
+
+.rating label:hover,
+.rating label:hover ~ label {
+  color: #f5b301;
 }
