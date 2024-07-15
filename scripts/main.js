@@ -10,9 +10,10 @@ import {
 import {fetchServices, addService, editService, deleteService, updateService} from "/scripts/entities/service.js";
 import {fetchHabitatsForVisitor} from "/scripts/visiteur/habitat.js";
 import {fetchServicesForVisitor} from "/scripts/visiteur/service.js";
-import {updateStars} from "/scripts/entities/avis.js";
+import {rate} from "/scripts/entities/avis.js";
 import {fetchEtat,fetchRaces, fetchAllAnimaux, fetchNouriture} from "/scripts/common/commun.js"
 import {fetchRapports, addRapport, editRapport, deleteRapport} from "/scripts/entities/rapport.js";
+import {fetchAvis, saveAvis, updateAvis} from "/scripts/entities/avis.js"
 document.addEventListener('DOMContentLoaded', function () {
     let trouve = true;
     switch (location.pathname) {
@@ -28,8 +29,8 @@ document.addEventListener('DOMContentLoaded', function () {
         case '/admin/habitats':
             fetchHabitats();
             break;
-        case '/avis':
-            updateStars();
+        case '/employe/avis':
+            fetchAvis();
             break;
         case '/veterinaire/rapports':
             fetchRapports();
@@ -56,7 +57,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-
 window.addAnimal = addAnimal;
 window.editAnimal = editAnimal;
 window.deleteAnimal = deleteAnimal;
@@ -70,6 +70,10 @@ window.addService= addService;
 window.editService = editService;
 window.updateService = updateService;
 window.deleteService = deleteService;
+window.rate = rate;
+window.fetchAvis = fetchAvis;
+window.saveAvis = saveAvis;
+window.updateAvis = updateAvis;
 
 export function resetForm() {
     const form = document.getElementsByClassName('needs-validation')[0];
@@ -77,3 +81,4 @@ export function resetForm() {
     form.classList.remove('was-validated')
 }
 window.resetForm = resetForm;
+//window.fetchServices = fetchServices;

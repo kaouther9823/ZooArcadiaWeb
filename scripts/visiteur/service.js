@@ -1,6 +1,6 @@
 import { api } from "/scripts/common/api.js"
 
-function fetchServicesForVisitor() {
+export function fetchServicesForVisitor() {
     api.get('/services')
         .then(services => {
             let rows = '';
