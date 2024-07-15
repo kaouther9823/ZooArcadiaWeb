@@ -12,8 +12,11 @@ import {fetchHabitatsForVisitor} from "/scripts/visiteur/habitat.js";
 import {fetchServicesForVisitor} from "/scripts/visiteur/service.js";
 import {rate} from "/scripts/entities/avis.js";
 import {fetchEtat,fetchRaces, fetchAllAnimaux, fetchNouriture} from "/scripts/common/commun.js"
-import {fetchRapports, addRapport, editRapport, deleteRapport} from "/scripts/entities/rapport.js";
+import {fetchRapports, addRapport, editRapport, deleteRapport, filterReports} from "/scripts/entities/rapport.js";
 import {fetchAvis, saveAvis, updateAvis} from "/scripts/entities/avis.js"
+import {fetchUsers, addUser, deleteUser, editUser, showInputsPasswd} from "/scripts/entities/user.js";
+import {editHorraire}   from "/scripts/entities/horraire.js";
+
 document.addEventListener('DOMContentLoaded', function () {
     let trouve = true;
     switch (location.pathname) {
@@ -32,7 +35,19 @@ document.addEventListener('DOMContentLoaded', function () {
         case '/employe/avis':
             fetchAvis();
             break;
+        case '/admin/users':
+            fetchUsers();
+            break;
+        case '/admin/animaux':
+            fetchAnimaux();
+            break;
+        case '/admin/horraires':
+            editHorraire();
+            break;
         case '/veterinaire/rapports':
+            fetchRapports(false);
+            break;
+        case '/admin/rapports':
             fetchRapports();
             fetchEtat('etat');
             fetchNouriture('nouriture')
@@ -74,6 +89,12 @@ window.rate = rate;
 window.fetchAvis = fetchAvis;
 window.saveAvis = saveAvis;
 window.updateAvis = updateAvis;
+window.addUser = addUser;
+window.deleteUser = deleteUser;
+window.editHorraire = editHorraire;
+window.filterReports = filterReports;
+window.editUser = editUser;
+window.showInputsPasswd = showInputsPasswd;
 
 export function resetForm() {
     const form = document.getElementsByClassName('needs-validation')[0];

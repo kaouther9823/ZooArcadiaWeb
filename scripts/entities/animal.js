@@ -20,8 +20,13 @@ export function editAnimal(id) {
 export function fetchAnimaux(habitatId) {
     const urlArray = location.pathname.split("/");
     const idHabitat = urlArray[urlArray.length - 1];
+    let url = "";
     if (!isNaN(idHabitat) && idHabitat !== "") {
-        fetch(`${API_BASE_URL}/animaux/habitat/${idHabitat}`).then(response => response.json())
+        url = `${API_BASE_URL}/animaux/habitat/${idHabitat}`;
+    }else {
+        url = `${API_BASE_URL}/animaux`;
+    }
+        fetch(`${url}`).then(response => response.json())
             .then(animaux => {
                 let rows = '';
                 animaux.forEach(animal => {
@@ -60,7 +65,6 @@ export function fetchAnimaux(habitatId) {
             .catch(error => {
                 console.error('There was an error!', error);
             });
-    }
 }
 export function deleteAnimal(id) {
     if (confirm('Êtes-vous sûr de vouloir supprimer cet animal ?')) {

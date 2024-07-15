@@ -41,6 +41,5 @@ export const api = {
             .catch(error => {
                 console.error('Error:', error);
             });
-    }
-
+    },
 };

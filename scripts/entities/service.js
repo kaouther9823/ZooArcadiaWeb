@@ -17,11 +17,15 @@ export function editService(id) {
 }
 
 
-export function fetchServices() {
+export function fetchServices(page = 1, servicesPerPage = 5) {
     api.get('/services')
         .then(services => {
+            const totalServices = services.length;
+            const totalPages = Math.ceil(totalServices / servicesPerPage);
+            const offset = (page - 1) * servicesPerPage;
+            const paginatedServices = services.slice(offset, offset + servicesPerPage);
             let rows = '';
-            services.forEach(service => {
+            paginatedServices.forEach(service => {
                 rows += `
                     <tr>
                         <td>${service.nom}</td>
@@ -41,10 +45,30 @@ export function fetchServices() {
                 `;
             });
             document.getElementById('serviceRows').innerHTML = rows;
+            renderPagination(totalPages, page);
         })
         .catch(error => {
             console.error('There was an error!', error);
         });
+}
+
+function renderPagination(totalPages, currentPage) {
+    const paginationElement = document.getElementById('pagination');
+    paginationElement.innerHTML = '';
+
+    for (let i = 1; i <= totalPages; i++) {
+        const li = document.createElement('li');
+        li.classList.add('page-item');
+        if (i === currentPage) {
+            li.classList.add('active');
+        }
+        li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+        li.addEventListener('click', (event) => {
+            event.preventDefault();
+            fetchServices(i);
+        });
+        paginationElement.appendChild(li);
+    }
 }
 
 export function deleteService(id) {

@@ -19,12 +19,20 @@ export function editRapport(id) {
         });
 }
 
-export function fetchRapports() {
+export function fetchRapports(edit=true) {
     api.get(controllerUrl)
-        .then(rapport => {
-            let rows = '';
-            rapport.forEach(rapport => {
-                rows += `
+        .then(rapports => {
+            displayReports(rapports, edit);
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
+}
+
+function displayReports(rapports, edit) {
+    let rows = '';
+    rapports.forEach(rapport => {
+        rows += `
                     <tr>
                         <td>${rapport.veterinaire.prenom} ${rapport.veterinaire.nom}</td>
                         <td>${rapport.animal.prenom}</td>
@@ -34,7 +42,7 @@ export function fetchRapports() {
                         <td>${rapport.quantite}</td>
                         <td>${rapport.date}</td>
                         <td>
-                            <div class="btn-group" role="group" aria-label="Actions">
+                            <div class="btn-group" role="group" aria-label="Actions" hidden="${!edit}">
                                 <button class="btn btn-primary btn-floating  me-2" aria-label="Modifier" onclick="editRapport(${rapport.id})" data-mdb-ripple-init>
                                       <i class="fa-solid fa-pencil"></i>
                                 </button>
@@ -45,12 +53,8 @@ export function fetchRapports() {
                         </td>
                     </tr>
                 `;
-            });
-            document.getElementById('rapportRows').innerHTML = rows;
-        })
-        .catch(error => {
-            console.error('There was an error!', error);
-        });
+    });
+    document.getElementById('rapportRows').innerHTML = rows;
 }
 
 export function deleteRapport(id) {
@@ -113,4 +117,24 @@ export function addRapport() {
     document.getElementById("btn-close").click();
 }
 form.classList.add('was-validated');
+}
+
+// Fonction pour filtrer les comptes rendus
+export function filterReports() {
+    const animalFilter = document.getElementById('animalFilter').value;
+    const startDateFilter = document.getElementById('startDateFilter').value;
+    const endDateFilter = document.getElementById('endDateFilter').value;
+    const data= {
+        animal: animalFilter? animalFilter.trim() : "",
+        startDate: startDateFilter,
+        endDate: endDateFilter
+    };
+
+    api.get(`${controllerUrl}/search?` + new URLSearchParams(data))
+        .then(rapports => {
+            displayReports(rapports);
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
 }
