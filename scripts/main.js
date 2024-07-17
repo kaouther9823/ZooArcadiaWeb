@@ -10,16 +10,21 @@ import {
 import {fetchServices, addService, editService, deleteService, updateService} from "/scripts/entities/service.js";
 import {fetchHabitatsForVisitor} from "/scripts/visiteur/habitat.js";
 import {fetchServicesForVisitor} from "/scripts/visiteur/service.js";
-import {rate} from "/scripts/entities/avis.js";
 import {fetchEtat,fetchRaces, fetchAllAnimaux, fetchNouriture} from "/scripts/common/commun.js"
 import {fetchRapports, addRapport, editRapport, deleteRapport, filterReports} from "/scripts/entities/rapport.js";
-import {fetchAvis, saveAvis, updateAvis} from "/scripts/entities/avis.js"
+import {fetchRapportsEmploye, addRapportEmploye, editRapportEmploye, deleteRapportEmploye, filterReportsEmploye} from "/scripts/entities/rapportEmploye.js";
+
+import {fetchAvis, saveAvis, updateAvis, hideMessage, displayReview} from "/scripts/entities/avis.js"
 import {fetchUsers, addUser, deleteUser, editUser, showInputsPasswd} from "/scripts/entities/user.js";
 import {editHorraire}   from "/scripts/entities/horraire.js";
+import {login}  from "/scripts/login.js";
 
 document.addEventListener('DOMContentLoaded', function () {
     let trouve = true;
     switch (location.pathname) {
+        case '/':
+            displayReview();
+            break;
         case '/services':
             fetchServicesForVisitor();
             break;
@@ -31,6 +36,9 @@ document.addEventListener('DOMContentLoaded', function () {
             break;
         case '/admin/habitats':
             fetchHabitats();
+            break;
+        case '/avis':
+            hideMessage();
             break;
         case '/employe/avis':
             fetchAvis();
@@ -45,10 +53,13 @@ document.addEventListener('DOMContentLoaded', function () {
             editHorraire();
             break;
         case '/veterinaire/rapports':
-            fetchRapports(false);
+            fetchRapports(true);
+            fetchEtat('etat');
+            fetchNouriture('nouriture')
+            fetchAllAnimaux('animal');
             break;
         case '/admin/rapports':
-            fetchRapports();
+            fetchRapports(false);
             fetchEtat('etat');
             fetchNouriture('nouriture')
             fetchAllAnimaux('animal');
@@ -85,7 +96,6 @@ window.addService= addService;
 window.editService = editService;
 window.updateService = updateService;
 window.deleteService = deleteService;
-window.rate = rate;
 window.fetchAvis = fetchAvis;
 window.saveAvis = saveAvis;
 window.updateAvis = updateAvis;
@@ -95,6 +105,10 @@ window.editHorraire = editHorraire;
 window.filterReports = filterReports;
 window.editUser = editUser;
 window.showInputsPasswd = showInputsPasswd;
+window.addRapportEmploye = addRapportEmploye;
+window.editRapportEmploye = editRapportEmploye;
+window.deleteRapport = deleteRapportEmploye;
+window.login = login;
 
 export function resetForm() {
     const form = document.getElementsByClassName('needs-validation')[0];

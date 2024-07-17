@@ -18,6 +18,7 @@ export const  allRoutes= [
     new Route("/admin/animaux", "Animaux", "/pages/admin/animaux.html", ["/scripts/entities/animal.js"], "/api/animaux", true),
     new Route("/admin/horraire", "Horraire", "/pages/admin/horraire.html", ["/scripts/entities/horraire.js"], "/api/users", true),
     new Route("/admin/rapports", "Rapports", "/pages/admin/rapports.html", ["/scripts/entities/rapport.js"], "/api/rapport/veterinaire", true),
+    new Route("/employe/rapports", "Rapports", "/pages/employe/rapports.html", ["/scripts/entities/rapportEmploye.js"], "/api/rapport/employe", true),
 
 ]
 
