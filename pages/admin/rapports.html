@@ -1,0 +1,91 @@
+<section class="zoo-presentation">
+    <div class="container">
+        <div class="section-header text-center mb-4 pres">
+            <h2>Rapports vertérinaire</h2>
+        </div>
+
+
+        <!-- Filtres -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <label for="animalFilter">Filtrer par Animal</label>
+                <input type="text" id="animalFilter" class="form-control" placeholder="Nom de l'animal">
+            </div>
+            <div class="col-md-3">
+                <label for="startDateFilter">Date de Début</label>
+                <input type="date" id="startDateFilter" class="form-control">
+            </div>
+            <div class="col-md-3">
+                <label for="endDateFilter">Date de Fin</label>
+                <input type="date" id="endDateFilter" class="form-control">
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <button id="filterButton" class="btn btn-primary" onclick="filterReports()">Rechercher</button>
+            </div>
+
+        <div class="row" id="rapportTable">
+            <div class="row">
+                <table class="table table-striped nowrap w-100" id="habitatTable">
+                    <thead>
+                    <tr>
+                        <th>Verterinaire</th>
+                        <th>Animal</th>
+                        <th>Race</th>
+                        <th>Etat</th>
+                        <th>Nourriture</th>
+                        <th>Quantité(g)</th>
+                        <th>Date de passage</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="rapportRows">
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter/Editer un Rapport</h1>
+                            <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form id="rapportForm" class="row g-3 needs-validation" novalidate>
+                        <div class="form-group modal-body mb-3">
+
+                            <label class="form-label" for="id" hidden></label>
+                            <select class="form-select" id="id" name="id" hidden></select>
+                            <label class="form-label" for="animal">Animal</label>
+                            <select class="form-select" id="animal" name="animal" aria-label="Animal select" required></select>
+                            <div class="invalid-feedback">Veuillez sélectionner un animal.</div>
+
+                            <label class="form-label" for="etat">Etat</label>
+                            <select class="form-select" id="etat" name="etat" aria-label="Etat select" required></select>
+                            <div class="invalid-feedback">Veuillez sélectionner un état.</div>
+
+                            <label class="form-label" for="nouriture">Nouriture</label>
+                            <select class="form-select" id="nouriture" name="nouriture" aria-label="Nouriture select" required></select>
+                            <div class="invalid-feedback">Veuillez sélectionner une nourriture.</div>
+
+                            <label class="form-label" for="quantite">Quantite</label>
+                            <input class="form-control" type="number" id="quantite" name="quantite" aria-label="Quantite" required>
+                            <div class="invalid-feedback">Veuillez entrer une quantité.</div>
+
+                            <label class="form-label" for="description">Commentatire</label>
+                            <textarea class="form-control auto-height" id="description" name="description" required></textarea>
+                            <div class="invalid-feedback">Veuillez entrer un commentaire.</div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <button type="submit" onclick="addRapport()" class="btn btn-primary">Valider</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

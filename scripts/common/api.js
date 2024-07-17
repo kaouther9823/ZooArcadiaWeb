@@ -1,6 +1,3 @@
-// Fichier: /scripts/common/api.js
-//
-//
 export const API_BASE_URL = 'http://localhost:8000/api';
 export const api = {
     get: function(url) {
@@ -41,6 +38,6 @@ export const api = {
             .catch(error => {
                 console.error('Error:', error);
             });
-    }
-
+    },
 };
+
