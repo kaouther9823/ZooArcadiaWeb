@@ -16,7 +16,6 @@ export function editService(id) {
         });
 }
 
-
 export function fetchServices(page = 1, servicesPerPage = 5) {
     api.get('/services')
         .then(services => {

@@ -10,14 +10,10 @@ import {
 import {fetchServices, addService, editService, deleteService, updateService} from "/scripts/entities/service.js";
 import {fetchHabitatsForVisitor} from "/scripts/visiteur/habitat.js";
 import {fetchServicesForVisitor} from "/scripts/visiteur/service.js";
-import {fetchEtat,fetchRaces, fetchAllAnimaux, fetchNouriture} from "/scripts/common/commun.js"
-import {fetchRapports, addRapport, editRapport, deleteRapport, filterReports} from "/scripts/entities/rapport.js";
-import {fetchRapportsEmploye, addRapportEmploye, editRapportEmploye, deleteRapportEmploye, filterReportsEmploye} from "/scripts/entities/rapportEmploye.js";
-
 import {fetchAvis, saveAvis, updateAvis, hideMessage, displayReview} from "/scripts/entities/avis.js"
-import {fetchUsers, addUser, deleteUser, editUser, showInputsPasswd} from "/scripts/entities/user.js";
-import {editHorraire}   from "/scripts/entities/horraire.js";
-import {login}  from "/scripts/login.js";
+import {rate} from "/scripts/entities/avis.js";
+import {fetchEtat,fetchRaces, fetchAllAnimaux, fetchNouriture} from "/scripts/common/commun.js"
+import {fetchRapports, addRapport, editRapport, deleteRapport} from "/scripts/entities/rapport.js";
 
 document.addEventListener('DOMContentLoaded', function () {
     let trouve = true;
@@ -37,20 +33,8 @@ document.addEventListener('DOMContentLoaded', function () {
         case '/admin/habitats':
             fetchHabitats();
             break;
-        case '/avis':
-            hideMessage();
-            break;
         case '/employe/avis':
             fetchAvis();
-            break;
-        case '/admin/users':
-            fetchUsers();
-            break;
-        case '/admin/animaux':
-            fetchAnimaux();
-            break;
-        case '/admin/horraires':
-            editHorraire();
             break;
         case '/veterinaire/rapports':
             fetchRapports(true);
@@ -96,19 +80,10 @@ window.addService= addService;
 window.editService = editService;
 window.updateService = updateService;
 window.deleteService = deleteService;
+
 window.fetchAvis = fetchAvis;
 window.saveAvis = saveAvis;
 window.updateAvis = updateAvis;
-window.addUser = addUser;
-window.deleteUser = deleteUser;
-window.editHorraire = editHorraire;
-window.filterReports = filterReports;
-window.editUser = editUser;
-window.showInputsPasswd = showInputsPasswd;
-window.addRapportEmploye = addRapportEmploye;
-window.editRapportEmploye = editRapportEmploye;
-window.deleteRapport = deleteRapportEmploye;
-window.login = login;
 
 export function resetForm() {
     const form = document.getElementsByClassName('needs-validation')[0];
@@ -116,4 +91,3 @@ export function resetForm() {
     form.classList.remove('was-validated')
 }
 window.resetForm = resetForm;
-//window.fetchServices = fetchServices;
