@@ -6,7 +6,7 @@
 
 
         <!-- Filtres -->
-        <div class="row mb-4">
+        <div class="row mb-4 pt-3">
             <div class="col-md-3">
                 <label for="animalFilter">Filtrer par Animal</label>
                 <input type="text" id="animalFilter" class="form-control" placeholder="Nom de l'animal">
@@ -24,7 +24,7 @@
             </div>
 
         <div class="row" id="rapportTable">
-            <div class="row">
+            <div class="row pt-5">
                 <table class="table table-striped nowrap w-100" id="habitatTable">
                     <thead>
                     <tr>
@@ -41,7 +41,12 @@
                     <tbody id="rapportRows">
                     </tbody>
                 </table>
-
+                <!-- Pagination -->
+                <nav>
+                    <ul class="pagination justify-content-center" id="pagination">
+                        <!-- Les boutons de pagination seront injectés ici -->
+                    </ul>
+                </nav>
             </div>
         </div>
         <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -55,8 +60,8 @@
                         <form id="rapportForm" class="row g-3 needs-validation" novalidate>
                         <div class="form-group modal-body mb-3">
 
-                            <label class="form-label" for="id" hidden></label>
-                            <select class="form-select" id="id" name="id" hidden></select>
+                            <label class="form-label" for="idRapport" hidden></label>
+                            <input type="text" class="form-control" id="idRapport" name="idRapport" hidden>
                             <label class="form-label" for="animal">Animal</label>
                             <select class="form-select" id="animal" name="animal" aria-label="Animal select" required></select>
                             <div class="invalid-feedback">Veuillez sélectionner un animal.</div>

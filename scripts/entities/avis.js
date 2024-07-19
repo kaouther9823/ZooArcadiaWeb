@@ -11,7 +11,7 @@ export function rate(event) {
         } else {
             star.classList.remove('star');
         }
-}
+    }
 }
 
 
@@ -21,8 +21,7 @@ export function saveAvis() {
     const form = document.getElementById('ratingForm');
     if (form.checkValidity() === false) {
         event.stopPropagation();
-    }
-    else {
+    } else {
         const pseudoInput = document.getElementById('pseudo');
         const commentaireInput = document.getElementById('commentaire');
         const radios = document.getElementsByName('evaluation');
@@ -48,7 +47,7 @@ export function saveAvis() {
     form.classList.add('was-validated');
 }
 
-export function fetchAvis(page=1, avisPerPage = 5) {
+export function fetchAvis(page = 1, avisPerPage = 5) {
     api.get('/avis')
         .then(avis => {
             let row = '';
@@ -58,8 +57,8 @@ export function fetchAvis(page=1, avisPerPage = 5) {
             const offset = (page - 1) * avisPerPage;
             const paginatedAvis = avis.slice(offset, offset + avisPerPage);
             paginatedAvis.forEach(avis => {
-                const treatedMessage = avis.treated? "Traité": "en cour de traitement";
-                const statusMessage = avis.visible? "Validé": (avis.treated? "Rejeté" :"");
+                const treatedMessage = avis.treated ? "Traité" : "en cour de traitement";
+                const statusMessage = avis.visible ? "Validé" : (avis.treated ? "Rejeté" : "");
                 row = `
                     <tr>
                         <td>${avis.pseudo}</td>
@@ -79,21 +78,21 @@ export function fetchAvis(page=1, avisPerPage = 5) {
                     </tr>
                 `;
                 document.getElementById('avisRows').innerHTML += row;
-                const btns = document.getElementsByName('actions-'+avis.avisId);
-                if (avis.treated){
+                const btns = document.getElementsByName('actions-' + avis.avisId);
+                if (avis.treated) {
                     btns.forEach(btn => {
                         btn.classList.remove('d-block');
                         btn.classList.add('d-none');
                     });
-                    document.getElementById('status-'+avis.avisId).classList.remove('d-none');
-                   // document.getElementById('status-'+avis.avisId).classList.add('d-block');
+                    document.getElementById('status-' + avis.avisId).classList.remove('d-none');
+                    // document.getElementById('status-'+avis.avisId).classList.add('d-block');
                 } else {
                     btns.forEach(btn => {
                         btn.classList.remove('d-none');
                         btn.classList.add('d-block');
                     });
-                    document.getElementById('status-'+avis.avisId).classList.remove('d-block');
-                   //document.getElementById('status-'+avis.avisId).classList.add('d-none');
+                    document.getElementById('status-' + avis.avisId).classList.remove('d-block');
+                    //document.getElementById('status-'+avis.avisId).classList.add('d-none');
                 }
                 renderPagination(totalPages, page);
             });
@@ -107,7 +106,7 @@ export function fetchAvis(page=1, avisPerPage = 5) {
 
 export function updateAvis(idAvis, isValid) {
     const avisItem = {
-        treated : true,
+        treated: true,
         visible: !!isValid
     }
     api.put(`/avis/${idAvis}`, avisItem)
@@ -121,8 +120,10 @@ export function updateAvis(idAvis, isValid) {
 
 export function hideMessage() {
     setTimeout(() => {
-        document.getElementById("message").style.display = 'none';}, 100);
-    }
+        document.getElementById("message").style.display = 'none';
+    }, 100);
+}
+
 function renderPagination(totalPages, currentPage) {
     const paginationElement = document.getElementById('pagination');
     paginationElement.innerHTML = '';
@@ -141,36 +142,38 @@ function renderPagination(totalPages, currentPage) {
         paginationElement.appendChild(li);
     }
 }
-export function displayReview(){
+
+export function displayReview() {
     setTimeout(() => {
-    let  rows ="";
-    //document.getElementById('visitors-reviews"').innerHTML = "";
-    api.get('/avis/home')
-        .then(reviews => {
-            reviews.forEach(review => {
-                let rating = `<div class="rating">`;
-                for (let i = 0; i < review.note ; i++) {
-                    rating += `<span class="star">&#9733;</span>`;
-                }
-                for (let i = 0; i < ( 5 - review.note) ; i++) {
-                    rating += `<span class="star">&#9734;</span>`;
-                }
-                rating += `</div>`;
-                rows += `
+        let rows = "";
+        //document.getElementById('visitors-reviews"').innerHTML = "";
+        api.get('/avis/home')
+            .then(reviews => {
+                reviews.forEach(review => {
+                    let rating = `<div class="rating">`;
+                    for (let i = 0; i < review.note; i++) {
+                        rating += `<span class="star">&#9733;</span>`;
+                    }
+                    for (let i = 0; i < (5 - review.note); i++) {
+                        rating += `<span class="star">&#9734;</span>`;
+                    }
+                    rating += `</div>`;
+                    rows += `
                     <div class = "col" >
                         <div class="card h-100">
                             <div class="card-body">
                                 <h5 class="card-title">${review.pseudo}</h5>
                                 <p class="card-text">"${review.commentaire}"</p>`;
-                                rows += rating;
+                    rows += rating;
                     rows += `</div>
                         </div>
                     </div>
                 `;
-                document.getElementById('visitors-reviews').innerHTML += rows;
+                    document.getElementById('visitors-reviews').innerHTML += rows;
+                });
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
             });
-        })
-        .catch(error => {
-            console.error('There was an error!', error);
-        });}, 100);
+    }, 100);
 }

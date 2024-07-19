@@ -1,7 +1,7 @@
-import { api } from "/scripts/common/api.js"
+import {api} from "/scripts/common/api.js"
 
 export function fetchServicesForVisitor() {
-    api.get('/services')
+    api.get('/services/images/list')
         .then(services => {
             let rows = '';
             let index = 0;
@@ -14,7 +14,7 @@ export function fetchServicesForVisitor() {
                         <p>${service.description}</p>
                     </div>
                     <div class="col-lg-6 mb-4 image-card text-white pres">
-                        <img src="images/${service.imagePath}" class="img-fluid rounded d-block w-100 h-100"
+                         <img src ="data:image/jpeg;base64,${service.imageData}" class="img-fluid rounded d-block w-100 h-100"
                         alt="${service.nom}">
                         <p class="titre-image image-card">${service.nom}</p>
                     </div>
@@ -22,7 +22,7 @@ export function fetchServicesForVisitor() {
                 } else {
                     rows += `
                     <div class="col-lg-6 mb-4 image-card text-white pres">
-                        <img src="images/${service.imagePath}" class="img-fluid rounded d-block w-100 h-100"
+                        <img src ="data:image/jpeg;base64,${service.imageData}"  class="img-fluid rounded d-block w-100 h-100"
                         alt="${service.nom}">
                         <p class="titre-image image-card">${service.nom}</p>
                     </div>

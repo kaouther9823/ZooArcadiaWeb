@@ -1,7 +1,6 @@
 import Route from "./Route.js";
 import {allRoutes, websiteName} from "./allRoutes.js";
-import {} from "./visiteur/service.js"
-import {} from "./entities/service.js"
+
 // Création d'une route pour la page 404 (page introuvable)
 const route404 = new Route("/404", "Page introuvable", "/pages/404.html");
 
@@ -17,14 +16,14 @@ const getRouteByUrl = (url) => {
         urlRoute = url.replace(lastElement, "${id}");
         isForm = true
     }
-        allRoutes.forEach((element) => {
-            if (element.url === urlRoute) {
-                currentRoute = element;
-                if (isForm){
-                    currentRoute.url = url;
-                }
+    allRoutes.forEach((element) => {
+        if (element.url === urlRoute) {
+            currentRoute = element;
+            if (isForm) {
+                currentRoute.url = url;
             }
-        });
+        }
+    });
 
     // Si aucune correspondance n'est trouvée, on retourne la route 404
     if (currentRoute != null) {
@@ -44,11 +43,11 @@ const LoadContentPage = async () => {
     document.getElementById("main-page").innerHTML = await fetch(actualRoute.pathHtml).then((data) => data.text());
 
     if (actualRoute.url.includes("/admin/")) {
-        document.getElementById("carousel").style.display="none";
-        document.getElementById("zooFooter").style.display="none";
+        document.getElementById("carousel").style.display = "none";
+        document.getElementById("zooFooter").style.display = "none";
     } else {
-        document.getElementById("carousel").style.display="block";
-        document.getElementById("zooFooter").style.display="block";
+        document.getElementById("carousel").style.display = "block";
+        document.getElementById("zooFooter").style.display = "block";
     }
 
     // Ajout du contenu JavaScript

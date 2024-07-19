@@ -1,21 +1,17 @@
-import {fetchAnimaux,deleteAnimal,updateAnimal,editAnimal, addAnimal} from "/scripts/entities/animal.js";
-import {
-    showHabitat,
-    fetchHabitats,
-    updateHabitat,
-    deleteHabitat,
-    addHabitat,
-    editHabitat
-} from "/scripts/entities/habitat.js";
-import {fetchServices, addService, editService, deleteService, updateService} from "/scripts/entities/service.js";
+import {addAnimal, addAnimalInHabitatView, deleteAnimal, editAnimal, fetchAnimaux} from "/scripts/entities/animal.js";
+import {addHabitat, deleteHabitat, editHabitat, fetchHabitats, showHabitat} from "/scripts/entities/habitat.js";
+import {addService, deleteService, editService, fetchServices} from "/scripts/entities/service.js";
 import {fetchHabitatsForVisitor} from "/scripts/visiteur/habitat.js";
 import {fetchServicesForVisitor} from "/scripts/visiteur/service.js";
-import {fetchAvis, saveAvis, updateAvis, hideMessage, displayReview} from "/scripts/entities/avis.js"
-import {rate} from "/scripts/entities/avis.js";
-import {fetchEtat,fetchRaces, fetchAllAnimaux, fetchNouriture} from "/scripts/common/commun.js"
-import {fetchRapports, addRapport, editRapport, deleteRapport} from "/scripts/entities/rapport.js";
+import {fetchAllAnimaux, fetchEtat, fetchNouriture, fetchRaces, fetchListHabitats, initLabelAddModal} from "/scripts/common/commun.js"
+import {addRapport, deleteRapport, editRapport, fetchRapports, filterReports} from "/scripts/entities/rapport.js";
+
+import {displayReview, fetchAvis, hideMessage, saveAvis, updateAvis} from "/scripts/entities/avis.js"
+import {addUser, deleteUser, editUser, fetchUsers, showInputsPasswd} from "/scripts/entities/user.js";
+import {editHorraire, saveHorraires, fetchHorraires} from "/scripts/entities/horraire.js";
 
 document.addEventListener('DOMContentLoaded', function () {
+    showAndHideElementsForRoles();
     let trouve = true;
     switch (location.pathname) {
         case '/':
@@ -33,8 +29,23 @@ document.addEventListener('DOMContentLoaded', function () {
         case '/admin/habitats':
             fetchHabitats();
             break;
-        case '/employe/avis':
-            fetchAvis();
+        case '/avis':
+            hideMessage();
+            break;
+
+        case '/admin/users':
+            fetchUsers();
+            break;
+        case '/admin/animaux':
+            fetchAnimaux();
+            setTimeout(() => {
+                fetchEtat("animal-etat");
+                fetchListHabitats("animal-habitat")
+                fetchRaces("animal-race");
+            }, 1000);
+            break;
+        case '/admin/horraire':
+            fetchHorraires();
             break;
         case '/veterinaire/rapports':
             fetchRapports(true);
@@ -52,8 +63,8 @@ document.addEventListener('DOMContentLoaded', function () {
             trouve = false;
     }
 
-    if (trouve === false ) {
-        if (location.pathname.includes("/admin/habitat/")){
+    if (trouve === false) {
+        if (location.pathname.includes("/admin/habitat/")) {
             const urlArray = location.pathname.split("/");
             const lastElement = urlArray[urlArray.length - 1];
             if (!isNaN(lastElement) && lastElement !== "") {
@@ -76,14 +87,21 @@ window.deleteRapport = deleteRapport;
 window.addHabitat = addHabitat;
 window.editHabitat = editHabitat;
 window.deleteHabitat = deleteHabitat;
-window.addService= addService;
+window.addService = addService;
 window.editService = editService;
-window.updateService = updateService;
 window.deleteService = deleteService;
-
 window.fetchAvis = fetchAvis;
 window.saveAvis = saveAvis;
 window.updateAvis = updateAvis;
+window.addUser = addUser;
+window.deleteUser = deleteUser;
+window.editHorraire = editHorraire;
+window.filterReports = filterReports;
+window.editUser = editUser;
+window.showInputsPasswd = showInputsPasswd;
+window.initLabelAddModal = initLabelAddModal;
+window.saveHorraires = saveHorraires;
+window.addAnimalInHabitatView= addAnimalInHabitatView;
 
 export function resetForm() {
     const form = document.getElementsByClassName('needs-validation')[0];
