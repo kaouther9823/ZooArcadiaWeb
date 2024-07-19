@@ -1,12 +1,14 @@
 import {api} from '/scripts/common/api.js';
-import {formatDate} from "/scripts/common/commun.js";
+import {formatDate, INIT_PAGE, ITEM_PER_PAGE} from "/scripts/common/commun.js";
 
 const controllerUrl = "/rapports/employes"
 
-export function editRapportEmploye(id) {
+export function editRapportEmploye(id, edit = true) {
     api.get(`${controllerUrl}/${id}`)
         .then(rapport => {
-            document.getElementById('addModalLabel').innerText = "Editer un rapport";
+            if (edit) {
+                document.getElementById('addModalLabel').innerText = "Editer un rapport";
+            }
             document.getElementById("id").value = rapport.id;
             document.getElementById("animal").value = rapport.animal.id;
             document.getElementById("nouriture").value = rapport.nouriture.id;
@@ -24,11 +26,11 @@ export function editRapportEmploye(id) {
         });
 }
 
-export function fetchRapportsEmploye(edit = true, page = 1, rapportsPerPage = 5) {
-   // if (getRole() !== ROLE_EMPLOYE) {
+export function fetchRapportsEmploye(edit = true, page = INIT_PAGE, rapportsPerPage = ITEM_PER_PAGE) {
+    // if (getRole() !== ROLE_EMPLOYE) {
     //    setTimeout(() => {
     //        document.getElementById('btn-new-div').style.display = 'none'
-     //   }, 100);
+    //   }, 100);
     //}
     api.get(controllerUrl)
         .then(rapports => {
@@ -53,28 +55,39 @@ function displayReports(rapports, edit, page, rapportPerPage) {
                         <td>${rapport.animal.race.label}</td>
                         <td>${rapport.nouriture.label}</td>
                         <td>${rapport.quantite}</td>
-                        <td>${formatDate(rapport.date)}</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Actions">
-                                <button class="btn btn-primary btn-floating  me-2" aria-label="Modifier" title="Modifier" onclick="editRapportEmploye(${rapport.id})" data-mdb-ripple-init>
-                                      <i class="fa-solid fa-pencil"></i>
+                        <td>${formatDate(rapport.date)}</td>`;
+        if (edit) {
+
+        rows += `       <td>
+                            <div class="btn-group" role="group" aria-label="Actions" >
+                                <button class="btn btn-primary btn-floating  me-2" aria-label="Modifier" onclick="editRapportEmploye(${rapport.id})" data-mdb-ripple-init>
+                                    <i class="fa-solid fa-pencil"></i>
                                 </button>
-                                <button class="btn btn-danger btn-floating" aria-label="Supprimer" title="Supprimer" onclick="deleteRapport(${rapport.id})" data-mdb-ripple-init>
-                                      <i class="fa-solid fa-trash-can"></i>
+                                <button class="btn btn-danger btn-floating" aria-label="Supprimer" onclick="deleteRapportEmploye(${rapport.id})" data-mdb-ripple-init>
+                                    <i class="fa-solid fa-trash-can"></i>
                                 </button>
                             </div>
                         </td>
-                    </tr>
-                `;
+                    </tr>`;
+        } else {
+            rows += `<td>
+                        <div class="btn-group" role="group" aria-label="Actions" >
+                            <button class="btn btn-primary btn-floating  me-2" aria-label="Modifier" onclick="editRapportEmploye(${rapport.id}, false)" data-mdb-ripple-init>
+                                <i class="fa-solid fa-eye"></i>
+                             </button>
+                        </div>
+                    </td>
+                </tr>`;
+        }
     });
     document.getElementById('rapportRows').innerHTML = rows;
     renderPagination(edit, totalPages, page);
 }
 
 export function deleteRapportEmploye(id) {
-    if (confirm('Êtes-vous sûr de vouloir supprimer ce rapport ?')) {
+    if (confirm("Êtes-vous sûr de vouloir supprimer ce rapport d\'alimentation?")) {
         api.delete(`${controllerUrl}/${id}`)
-            .then(data => {
+            .then(() => {
                 fetchRapportsEmploye();
             })
             .catch(error => {
@@ -105,7 +118,7 @@ export function addRapportEmploye() {
         const idRapport = idRapportInput.value.trim();
         if (idRapport && idRapport !== "") {
             api.put(`${controllerUrl}/${idRapport}`, item)
-                .then(data => {
+                .then(() => {
                     fetchRapportsEmploye();
                     document.getElementById("btn-close").click();
                 })
@@ -114,7 +127,7 @@ export function addRapportEmploye() {
                 });
         } else {
             api.post(`${controllerUrl}/`, item)
-                .then(data => {
+                .then(() => {
                     form.reset();
                     form.classList.remove('was-validated')
                     fetchRapportsEmploye();
@@ -133,7 +146,7 @@ export function addRapportEmploye() {
 }
 
 // Fonction pour filtrer les comptes rendus
-export function filterReportsEmploye() {
+export function filterReportsEmployes() {
     const animalFilter = document.getElementById('animalFilter').value;
     const startDateFilter = document.getElementById('startDateFilter').value;
     const endDateFilter = document.getElementById('endDateFilter').value;
@@ -143,9 +156,9 @@ export function filterReportsEmploye() {
         endDate: endDateFilter
     };
 
-    api.get(`${controllerUrl}/search?` + new URLSearchParams(data))
+    api.get(`${controllerUrl}/list/search?` + new URLSearchParams(data))
         .then(rapports => {
-            displayReports(rapports);
+            displayReports(rapports, false,  INIT_PAGE, ITEM_PER_PAGE);
         })
         .catch(error => {
             console.error('There was an error!', error);

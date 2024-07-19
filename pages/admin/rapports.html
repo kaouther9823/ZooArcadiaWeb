@@ -54,43 +54,36 @@
                 <div class="modal-content">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter/Editer un Rapport</h1>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Détails du Rapport</h1>
                             <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form id="rapportForm" class="row g-3 needs-validation" novalidate>
                         <div class="form-group modal-body mb-3">
 
                             <label class="form-label" for="idRapport" hidden></label>
                             <input type="text" class="form-control" id="idRapport" name="idRapport" hidden>
                             <label class="form-label" for="animal">Animal</label>
                             <select class="form-select" id="animal" name="animal" aria-label="Animal select" required></select>
-                            <div class="invalid-feedback">Veuillez sélectionner un animal.</div>
 
                             <label class="form-label" for="etat">Etat</label>
-                            <select class="form-select" id="etat" name="etat" aria-label="Etat select" required></select>
-                            <div class="invalid-feedback">Veuillez sélectionner un état.</div>
+                            <select class="form-select" id="etat" name="etat" aria-label="Etat select" readonly></select>
 
                             <label class="form-label" for="nouriture">Nouriture</label>
-                            <select class="form-select" id="nouriture" name="nouriture" aria-label="Nouriture select" required></select>
-                            <div class="invalid-feedback">Veuillez sélectionner une nourriture.</div>
+                            <select class="form-select" id="nouriture" name="nouriture" aria-label="Nouriture select" readonly></select>
 
                             <label class="form-label" for="quantite">Quantite</label>
-                            <input class="form-control" type="number" id="quantite" name="quantite" aria-label="Quantite" required>
-                            <div class="invalid-feedback">Veuillez entrer une quantité.</div>
+                            <input class="form-control" type="number" id="quantite" name="quantite" aria-label="Quantite" readonly>
 
-                            <label class="form-label" for="description">Commentatire</label>
-                            <textarea class="form-control auto-height" id="description" name="description" required></textarea>
-                            <div class="invalid-feedback">Veuillez entrer un commentaire.</div>
+                            <label class="form-label" for="commentaire">Commentatire</label>
+                            <textarea class="form-control auto-height" id="commentaire" name="commentaire" readonly></textarea>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                            <button type="submit" onclick="addRapport()" class="btn btn-primary">Valider</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Retour</button>
                         </div>
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>

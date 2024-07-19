@@ -1,4 +1,5 @@
 import {api} from '/scripts/common/api.js';
+import {INIT_PAGE, ITEM_PER_PAGE} from "/scripts/common/commun.js";
 
 const controllerUrl = "/habitats/"
 
@@ -44,7 +45,7 @@ export function editHabitat(id) {
         .catch(error => console.error('Error fetching habitat:', error));
 }
 
-export function fetchHabitats(page = 1, habitatsPerPage = 5) {
+export function fetchHabitats(page = INIT_PAGE, habitatsPerPage = ITEM_PER_PAGE) {
     api.get(controllerUrl)
         .then(habitats => {
             const habitatTable = document.getElementById('habitatRows');
@@ -139,7 +140,7 @@ export function addHabitat() {
                     api.uploadImages(`${controllerUrl}${data.id}/upload`, formData);
                     window.location.href = '/admin/habitats';
                 })
-                .then(response => {
+                .then(() => {
                     treatFailureAddOrUpdateHabitat(form);
                 })
                 .catch(error => console.error('Error adding habitat:', error));
@@ -148,40 +149,13 @@ export function addHabitat() {
                 .then(data => {
                     return api.uploadImages(`${controllerUrl}${data.id}/upload`, formData);
                 })
-                .then(response => {
+                .then(() => {
                     treatFailureAddOrUpdateHabitat(form);
                 })
                 .catch(error => console.error('Error adding habitat:', error));
         }
     }
     form.classList.add('was-validated');
-}
-
-export function updateHabitat() {
-    const idInputText = document.getElementById('edit-id');
-    const nameInputText = document.getElementById('edit-nom');
-    const descriptionInputText = document.getElementById('edit-description');
-
-    const habitatItem = {
-        id: idInputText.value,
-        nom: nameInputText.value.trim(),
-        description: descriptionInputText.value.trim()
-    };
-
-    const formData = new FormData();
-    const files = document.getElementById('edit-images').files;
-    Array.from(files).forEach(file => formData.append('images[]', file));
-
-    api.put(`${controllerUrl}${idInputText.value}`, habitatItem)
-        .then(() => {
-            return api.uploadImages(`${controllerUrl}${idInputText.value}/upload`, formData);
-        })
-        .then(response => {
-            console.log(response);
-            fetchHabitats();
-            document.getElementById('btn-close').click();
-        })
-        .catch(error => console.error('Error updating habitat:', error));
 }
 
 export function listImageByHabitat(id) {

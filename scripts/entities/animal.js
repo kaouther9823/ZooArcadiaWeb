@@ -1,4 +1,5 @@
 import {api, API_BASE_URL} from '/scripts/common/api.js';
+import {INIT_PAGE, ITEM_PER_PAGE} from "/scripts/common/commun.js";
 
 export function editAnimal(id) {
     api.get(`/animaux/${id}`)
@@ -9,7 +10,7 @@ export function editAnimal(id) {
             document.getElementById('animal-etat').value = animal.etat.id;
             document.getElementById('animal-race').value = animal.race.id;
             document.getElementById('animal-habitat').value = animal.habitat.id;
-            var animalModal = new bootstrap.Modal(document.getElementById('animalModal'), {
+            const animalModal = new bootstrap.Modal(document.getElementById('animalModal'), {
                 keyboard: false
             });
             animalModal.show();
@@ -19,10 +20,10 @@ export function editAnimal(id) {
         });
 }
 
-export function fetchAnimaux(habitatId, page = 1, animauxPerPage = 5) {
+export function fetchAnimaux(habitatId, page = INIT_PAGE, animauxPerPage = ITEM_PER_PAGE) {
     const urlArray = location.pathname.split("/");
     const idHabitat = urlArray[urlArray.length - 1];
-    let url = "";
+    let url;
     if (!isNaN(idHabitat) && idHabitat !== "") {
         url = `${API_BASE_URL}/animaux/habitat/${idHabitat}`;
     } else {
@@ -80,17 +81,13 @@ export function fetchAnimaux(habitatId, page = 1, animauxPerPage = 5) {
 export function deleteAnimal(id) {
     if (confirm('Êtes-vous sûr de vouloir supprimer cet animal ?')) {
         api.delete(`/animaux/${id}`)
-            .then(data => {
+            .then(() => {
                 fetchAnimaux();
             })
             .catch(error => {
                 console.error('There was an error!', error);
             });
     }
-}
-
-function deplacerAnimaHabitat(idAnimal, idHabitat) {
-
 }
 
 function listImagesByAnimal(id) {
@@ -149,7 +146,6 @@ export function addAnimal() {
             const name = document.getElementById("animal-prenom");
             const race = document.getElementById("animal-race");
             const habitat = document.getElementById("animal-habitat");
-            const idAnimalInput = document.getElementById("animal-id");
             const etat = document.getElementById("animal-etat");
             // upload images
 

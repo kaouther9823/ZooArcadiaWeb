@@ -1,5 +1,8 @@
 import {API_BASE_URL} from "/scripts/common/api.js";
 
+export const ITEM_PER_PAGE = 5;
+export const INIT_PAGE = 1;
+
 export function fetchEtat(idSelect) {
     fetch(`${API_BASE_URL}/etats`)  // Assurez-vous que l'URL de l'API est correcte
         .then(response => response.json())

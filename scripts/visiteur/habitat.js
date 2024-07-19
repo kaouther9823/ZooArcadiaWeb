@@ -6,7 +6,6 @@ export function fetchHabitatsForVisitor() {
         .then(habitats => {
             let rows = '';
             let images = '';
-            let index = 0;
             habitats.forEach(habitat => {
 
                 listImageByHabitat(habitat.id).then(data => {

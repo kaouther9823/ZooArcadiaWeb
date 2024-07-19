@@ -19,6 +19,9 @@ export const  allRoutes= [
     new Route("/admin/horraire", "Horraire", "/pages/admin/horraire.html", ["/scripts/entities/horraire.js"], "/api/users", true),
     new Route("/admin/rapports", "Rapports", "/pages/admin/rapports.html", ["/scripts/entities/rapport.js"], "/api/rapport/veterinaire", true),
     new Route("/employe/rapports", "Rapports", "/pages/employe/rapports.html", ["/scripts/entities/rapportEmploye.js"], "/api/rapport/employe", true),
+    new Route("/veterinaire/commentaires", "Commentaires", "/pages/veterinaire/commentaires.html", ["/scripts/entities/commentaireVeterinaire.js"], "/api/commentaires", true),
+    new Route("/veterinaire/rapportsAlimentation", "Rapports d'alimentation", "/pages/veterinaire/rapportsAlimentation.html"),
+
 ]
 
 export const websiteName = "Zoo Arcadia";
