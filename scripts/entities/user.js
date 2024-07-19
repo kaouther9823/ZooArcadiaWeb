@@ -1,4 +1,5 @@
 import {api} from '/scripts/common/api.js';
+import {INIT_PAGE, ITEM_PER_PAGE} from "/scripts/common/commun.js";
 
 export function editUser(id) {
     api.get(`/users/${id}`)
@@ -25,7 +26,7 @@ export function editUser(id) {
 }
 
 
-export function fetchUsers(page = 1, usersPerPage = 5) {
+export function fetchUsers(page = INIT_PAGE, usersPerPage = ITEM_PER_PAGE) {
     api.get('/users')
         .then(users => {
             const totalUsers = users.length;

@@ -1,4 +1,5 @@
-import {api, API_BASE_URL} from '/scripts/common/api.js';
+import {api} from '/scripts/common/api.js';
+import {INIT_PAGE, ITEM_PER_PAGE} from "/scripts/common/commun.js";
 
 export function editService(id) {
     api.get(`/services/${id}`)
@@ -18,7 +19,7 @@ export function editService(id) {
 }
 
 
-export function fetchServices(page = 1, servicesPerPage = 5) {
+export function fetchServices(page = INIT_PAGE, servicesPerPage = ITEM_PER_PAGE) {
     api.get('/services/images/list')
         .then(services => {
             const totalServices = services.length;

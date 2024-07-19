@@ -1,15 +1,18 @@
 import {
     api
 } from '/scripts/common/api.js';
+import {formatDate, INIT_PAGE, ITEM_PER_PAGE} from "/scripts/common/commun.js";
 
 const controllerUrl = "/rapports/veterinaires"
 export function editRapport(id) {
     api.get(`${controllerUrl}/${id}`)
         .then(rapport => {
-            document.getElementById('edit-id').value = rapport.id;
-            document.getElementById('edit-nom').value = rapport.nom;
-            document.getElementById('edit-description').value = rapport.description;
-            const editModal = new bootstrap.Modal(document.getElementById('editModal'), {
+            document.getElementById('idRapport').value = rapport.id;
+            document.getElementById('animal').value = rapport.animal.id;
+            document.getElementById('etat').value = rapport.etat.id;
+            document.getElementById('quantite').value = rapport.quantite;
+            document.getElementById('commentaire').value = rapport.detail;
+            const editModal = new bootstrap.Modal(document.getElementById('addModal'), {
                 keyboard: false
             });
             editModal.show();
@@ -19,19 +22,23 @@ export function editRapport(id) {
         });
 }
 
-export function fetchRapports(edit=true) {
+export function fetchRapports(edit=true, page = INIT_PAGE, rapportsPerPage = ITEM_PER_PAGE) {
     api.get(controllerUrl)
         .then(rapports => {
-            displayReports(rapports, edit);
+            displayReports(rapports, edit, page, rapportsPerPage);
         })
         .catch(error => {
             console.error('There was an error!', error);
         });
 }
 
-function displayReports(rapports, edit) {
+function displayReports(rapports, edit, page, rapportPerPage) {
+    const totalRapports = rapports.length;
+    const totalPages = Math.ceil(totalRapports / rapportPerPage);
+    const offset = (page - 1) * rapportPerPage;
+    const paginatedRapports = rapports.slice(offset, offset + rapportPerPage);
     let rows = '';
-    rapports.forEach(rapport => {
+    paginatedRapports.forEach(rapport => {
         rows += `
                     <tr>
                         <td>${rapport.veterinaire.prenom} ${rapport.veterinaire.nom}</td>
@@ -40,9 +47,10 @@ function displayReports(rapports, edit) {
                         <td>${rapport.etat.label}</td>
                         <td>${rapport.nouriture.label}</td>
                         <td>${rapport.quantite}</td>
-                        <td>${rapport.date}</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Actions" hidden="${!edit}">
+                        <td>${formatDate(rapport.date)}</td>`;
+        if (edit) {
+            rows += `          <td>
+                            <div class="btn-group" role="group" aria-label="Actions" >
                                 <button class="btn btn-primary btn-floating  me-2" aria-label="Modifier" onclick="editRapport(${rapport.id})" data-mdb-ripple-init>
                                       <i class="fa-solid fa-pencil"></i>
                                 </button>
@@ -51,16 +59,26 @@ function displayReports(rapports, edit) {
                                 </button>
                             </div>
                         </td>
-                    </tr>
-                `;
+                    </tr>`;
+        } else {  rows += `          <td>
+                            <div class="btn-group" role="group" aria-label="Actions" >
+                                <button class="btn btn-primary btn-floating  me-2" aria-label="Modifier" onclick="editRapport(${rapport.id})" data-mdb-ripple-init>
+                                      <i class="fa-solid fa-eye"></i>
+                                </button>
+  
+                            </div>
+                        </td>
+                    </tr>`;}
+
     });
     document.getElementById('rapportRows').innerHTML = rows;
+    renderPagination(edit, totalPages, page);
 }
 
 export function deleteRapport(id) {
     if (confirm('Êtes-vous sûr de vouloir supprimer ce rapport ?')) {
         api.delete(`${controllerUrl}/${id}`)
-            .then(data => {
+            .then(() => {
                 fetchRapports();
             })
             .catch(error => {
@@ -77,24 +95,24 @@ export function addRapport() {
     if (form.checkValidity() === false) {
         event.stopPropagation();
     } else {
-    const idRapportInput = document.getElementById("id");
+    const idRapportInput = document.getElementById("idRapport");
     const animal = document.getElementById("animal");
     const etat = document.getElementById("etat");
     const nouriture = document.getElementById("nouriture");
     const quantite = document.getElementById("quantite");
-    const description = document.getElementById("description");
+    const commentaire = document.getElementById("commentaire");
 
     const item = {
         animal: animal.value.trim(),
         etat: etat.value.trim(),
         nouriture: nouriture.value.trim(),
         quantite: Number(quantite.value),
-        description: description.value.trim(),
+        commentaire: commentaire.value.trim(),
     };
     const idRapport = idRapportInput.value.trim();
     if (idRapport && idRapport !== "") {
         api.put(`${controllerUrl}/${idRapport}`, item)
-            .then(data => {
+            .then(() => {
                 fetchRapports();
                 document.getElementById("btn-close").click();
             })
@@ -103,7 +121,7 @@ export function addRapport() {
             });
     } else {
         api.post(`${controllerUrl}/`, item)
-            .then(data => {
+            .then(() => {
                 form.reset();
                 form.classList.remove('was-validated')
                 fetchRapports();
@@ -132,9 +150,28 @@ export function filterReports() {
 
     api.get(`${controllerUrl}/search?` + new URLSearchParams(data))
         .then(rapports => {
-            displayReports(rapports);
+            displayReports(rapports, false, INIT_PAGE, ITEM_PER_PAGE);
         })
         .catch(error => {
             console.error('There was an error!', error);
         });
+}
+
+function renderPagination(edit, totalPages, currentPage) {
+    const paginationElement = document.getElementById('pagination');
+    paginationElement.innerHTML = '';
+
+    for (let i = 1; i <= totalPages; i++) {
+        const li = document.createElement('li');
+        li.classList.add('page-item');
+        if (i === currentPage) {
+            li.classList.add('active');
+        }
+        li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+        li.addEventListener('click', (event) => {
+            event.preventDefault();
+            fetchRapports(edit, i);
+        });
+        paginationElement.appendChild(li);
+    }
 }

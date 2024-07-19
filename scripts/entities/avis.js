@@ -1,19 +1,5 @@
 import {api} from "/scripts/common/api.js";
-
-export function rate(event) {
-    const ratingInput = document.getElementById('evaluation');
-    const rating = event.currentTarget.getAttribute('data-value');
-    const stars = document.getElementsByClassName('fa fa-star');
-    ratingInput.value = rating;
-    for (const star of stars) {
-        if (star.getAttribute('data-value') <= rating) {
-            star.classList.add('star');
-        } else {
-            star.classList.remove('star');
-        }
-    }
-}
-
+import {INIT_PAGE, ITEM_PER_PAGE} from "/scripts/common/commun.js";
 
 export function saveAvis() {
     event.preventDefault(); // Empêche la soumission par défaut
@@ -47,7 +33,7 @@ export function saveAvis() {
     form.classList.add('was-validated');
 }
 
-export function fetchAvis(page = 1, avisPerPage = 5) {
+export function fetchAvis(page = INIT_PAGE, avisPerPage = ITEM_PER_PAGE) {
     api.get('/avis')
         .then(avis => {
             let row = '';

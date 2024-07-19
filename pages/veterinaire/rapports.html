@@ -5,7 +5,7 @@
         </div>
         <div class="row p-3">
             <div class="col text-end">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+                <button type="button" onclick="initLabelAddModal('rapport')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
                     Nouveau Rapport
                 </button>
             </div>
@@ -28,7 +28,12 @@
                     <tbody id="rapportRows">
                     </tbody>
                 </table>
-
+                <!-- Pagination -->
+                <nav>
+                    <ul class="pagination justify-content-center" id="pagination">
+                        <!-- Les boutons de pagination seront injectés ici -->
+                    </ul>
+                </nav>
             </div>
         </div>
         <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -36,14 +41,14 @@
                 <div class="modal-content">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter/Editer un Rapport</h1>
+                            <h1 class="modal-title fs-5" id="addModalLabel"></h1>
                             <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form id="rapportForm" class="row g-3 needs-validation" novalidate>
                         <div class="form-group modal-body mb-3">
 
-                            <label class="form-label" for="id" hidden></label>
-                            <select class="form-select" id="id" name="id" hidden></select>
+                            <label class="form-label" for="idRapport" hidden></label>
+                            <select class="form-select" id="idRapport" name="idRapport" hidden></select>
                             <label class="form-label" for="animal">Animal</label>
                             <select class="form-select" id="animal" name="animal" aria-label="Animal select" required></select>
                             <div class="invalid-feedback">Veuillez sélectionner un animal.</div>
@@ -60,13 +65,13 @@
                             <input class="form-control" type="number" id="quantite" name="quantite" aria-label="Quantite" required>
                             <div class="invalid-feedback">Veuillez entrer une quantité.</div>
 
-                            <label class="form-label" for="description">Commentatire</label>
-                            <textarea class="form-control auto-height" id="description" name="description" required></textarea>
+                            <label class="form-label" for="commentaire">Commentatire</label>
+                            <textarea class="form-control auto-height" id="commentaire" name="commentaire" required></textarea>
                             <div class="invalid-feedback">Veuillez entrer un commentaire.</div>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                             <button type="submit" onclick="addRapport()" class="btn btn-primary">Valider</button>
                         </div>
                         </form>

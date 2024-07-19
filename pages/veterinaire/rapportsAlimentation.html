@@ -1,15 +1,28 @@
 <section class="zoo-presentation">
     <div class="container">
         <div class="section-header text-center mb-4 pres">
-            <h2>Rapports Employees</h2>
+            <h2>Rapports alimentation animaux</h2>
         </div>
-        <div class="row p-3" id="btn-new-div">
-            <div class="col text-end">
-                <button type="button" class="btn btn-primary" onclick="initLabelAddModal('rapport')" data-bs-toggle="modal" data-bs-target="#addModal">
-                    Nouveau Rapport
-                </button>
+
+        <div class="row mb-4 pt-3">
+            <div class="col-md-3">
+                <label for="animalFilter">Filtrer par Animal</label>
+                <input type="text" id="animalFilter" class="form-control" placeholder="Nom de l'animal">
+            </div>
+            <div class="col-md-3">
+                <label for="startDateFilter">Date de Début</label>
+                <input type="date" id="startDateFilter" class="form-control">
+            </div>
+            <div class="col-md-3">
+                <label for="endDateFilter">Date de Fin</label>
+                <input type="date" id="endDateFilter" class="form-control">
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <button id="filterButton" class="btn btn-primary" onclick="filterReportsEmployes()">Rechercher</button>
             </div>
         </div>
+
+
         <div class="row" id="rapportTable">
             <div class="row">
                 <table class="table table-striped nowrap w-100" id="rapportEmployeTable">
@@ -40,35 +53,28 @@
                 <div class="modal-content">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="addModalLabel"></h1>
+                            <h1 class="modal-title fs-5" id="addModalLabel">Détails du rapport</h1>
                             <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form id="rapportForm" class="row g-3 needs-validation" novalidate>
                         <div class="form-group modal-body mb-3">
 
                             <label class="form-label" for="id" hidden></label>
                             <input class="form-control" id="id" name="id" hidden>
                             <label class="form-label" for="animal">Animal</label>
-                            <select class="form-select" id="animal" name="animal" aria-label="Animal select" required></select>
-                            <div class="invalid-feedback">Veuillez sélectionner un animal.</div>
+                            <select class="form-select" id="animal" name="animal" aria-label="Animal select" readonly=""></select>
 
                             <label class="form-label" for="nouriture">Nouriture</label>
-                            <select class="form-select" id="nouriture" name="nouriture" aria-label="Nouriture select" required></select>
-                            <div class="invalid-feedback">Veuillez sélectionner une nourriture.</div>
+                            <select class="form-select" id="nouriture" name="nouriture" aria-label="Nouriture select" readonly=""></select>
 
                             <label class="form-label" for="quantite">Quantite</label>
-                            <input class="form-control" type="number" id="quantite" name="quantite" aria-label="Quantite" required>
-                            <div class="invalid-feedback">Veuillez entrer une quantité.</div>
+                            <input class="form-control" type="number" id="quantite" name="quantite" aria-label="Quantite" readonly>
 
                             <label class="form-label" for="date">Date alimentation</label>
-                            <input class="form-control" type="date" id="date" name="date" aria-label="Date alimentation" required>
-                            <div class="invalid-feedback">Veuillez entrer une date.</div>
+                            <input class="form-control" type="date" id="date" name="date" aria-label="Date alimentation" readonly>
                         </div>
                         <div class="modal-footer">
-                            <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                            <button type="submit" onclick="addRapportEmploye()" class="btn btn-primary">Valider</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Retour</button>
                         </div>
-                        </form>
                     </div>
                 </div>
             </div>

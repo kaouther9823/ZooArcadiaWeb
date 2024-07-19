@@ -5,7 +5,7 @@ import {fetchHabitatsForVisitor} from "/scripts/visiteur/habitat.js";
 import {fetchServicesForVisitor} from "/scripts/visiteur/service.js";
 import {fetchAllAnimaux, fetchEtat, fetchNouriture, fetchRaces, fetchListHabitats, initLabelAddModal} from "/scripts/common/commun.js"
 import {addRapport, deleteRapport, editRapport, fetchRapports, filterReports} from "/scripts/entities/rapport.js";
-
+import {addCommentaire, deleteCommentaire, editCommentaire, fetchCommentaires} from "/scripts/entities/commentaireVeterinaire.js";
 import {displayReview, fetchAvis, hideMessage, saveAvis, updateAvis} from "/scripts/entities/avis.js"
 import {addUser, deleteUser, editUser, fetchUsers, showInputsPasswd} from "/scripts/entities/user.js";
 import {editHorraire, saveHorraires, fetchHorraires} from "/scripts/entities/horraire.js";
@@ -13,7 +13,8 @@ import {
     addRapportEmploye,
     deleteRapportEmploye,
     editRapportEmploye,
-    fetchRapportsEmploye
+    fetchRapportsEmploye,
+    filterReportsEmployes
 } from "/scripts/entities/rapportEmploye.js";
 document.addEventListener('DOMContentLoaded', function () {
     let trouve = true;
@@ -68,6 +69,15 @@ document.addEventListener('DOMContentLoaded', function () {
             fetchNouriture('nouriture')
             fetchAllAnimaux('animal');
             break;
+        case '/veterinaire/commentaires':
+            fetchListHabitats('habitat')
+            fetchCommentaires();
+            break;
+        case '/veterinaire/rapportsAlimentation':
+            fetchRapportsEmploye(false);
+            fetchNouriture('nouriture')
+            fetchAllAnimaux('animal');
+            break;
         default:
             trouve = false;
     }
@@ -113,8 +123,11 @@ window.saveHorraires = saveHorraires;
 window.addAnimalInHabitatView= addAnimalInHabitatView;
 window.addRapportEmploye = addRapportEmploye;
 window.editRapportEmploye = editRapportEmploye;
-window.deleteRapport = deleteRapportEmploye;
-
+window.deleteRapportEmploye = deleteRapportEmploye;
+window.addCommentaire = addCommentaire;
+window.editCommentaire = editCommentaire;
+window.deleteCommentaire = deleteCommentaire;
+window.filterReportsEmployes = filterReportsEmployes;
 export function resetForm() {
     const form = document.getElementsByClassName('needs-validation')[0];
     form.reset();
