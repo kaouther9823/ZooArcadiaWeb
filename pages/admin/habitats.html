@@ -5,7 +5,7 @@
     </div>
     <div class="row p-3">
         <div class="col text-end">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+        <button type="button" class="btn btn-primary" onclick="initLabelAddModal('habitat')" data-bs-toggle="modal" data-bs-target="#addModal">
             Nouveau Habitat
         </button>
         </div>
@@ -22,6 +22,12 @@
             <tbody id="habitatRows">
             </tbody>
         </table>
+        <!-- Pagination -->
+        <nav>
+            <ul class="pagination justify-content-center" id="pagination">
+                <!-- Les boutons de pagination seront injectés ici -->
+            </ul>
+        </nav>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -29,21 +35,23 @@
             <div class="modal-content">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter un Habitat</h1>
+                        <h1 class="modal-title fs-5" id="addModalLabel"></h1>
                         <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form id="habitatForm" class="row g-3 needs-validation" novalidate>
                     <div class="modal-body mb-3">
-                        <label class="form-label" for="add-name">Name</label>
-                        <input class="form-control" type="text" id="add-name" name="add-name" required>
+                        <label class="form-label" for="idHabitat" hidden>Id</label>
+                        <input class="form-control" type="text" id="idHabitat" name="idHabitat" hidden>
+                        <label class="form-label" for="nom">Name</label>
+                        <input class="form-control" type="text" id="nom" name="nom" required>
                         <div class="invalid-feedback">Veuillez entrer un nom.</div>
 
-                        <label class="form-label" for="add-description">Description</label>
-                        <textarea class="form-control auto-height" id="add-description" name="add-description" required></textarea>
+                        <label class="form-label" for="description">Description</label>
+                        <textarea class="form-control auto-height" id="description" name="description" required></textarea>
                         <div class="invalid-feedback">Veuillez entrer une description.</div>
 
-                        <label class="form-label" for="add-images">Images</label>
-                        <input class="form-control" type="file" id="add-images" name="add-images" accept="image/*" multiple required>
+                        <label class="form-label" for="images">Images</label>
+                        <input class="form-control" type="file" id="images" name="add-images" accept="image/*" multiple required>
                     </div>
                     <div class="modal-footer">
                         <button type="button" onclick="resetForm()"  class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
@@ -54,35 +62,5 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal -->
-<!--    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="editModalLabel">Editer un Habitat</h1>
-                        <button type="button" class="btn-close" id="btn-close-edit" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body mb-3">
-                        <label class="form-label" for="edit-id" hidden>Name</label>
-                        <input class="form-control" type="text" id="edit-id" name="edit-id" hidden readonly>
-                        <label class="form-label" for="edit-nom">Name</label>
-                        <input class="form-control" type="text" id="edit-nom" name="edit-nom" required>
-                        <label class="form-label auto-height" for="edit-description">Description</label>
-                        <textarea class="form-control" id="edit-description" name="edit-description" required></textarea>
-                        <label class="form-label" for="edit-images">Image</label>
-                        <input class="form-control" type="file" id="edit-images" name="edit-images" accept="image/*" multiple>
-
-                        <div id="uploadResult"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" onclick="updateHabitat()" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>-->
 </div>
 </section>

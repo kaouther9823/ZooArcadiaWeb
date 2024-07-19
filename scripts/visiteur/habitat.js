@@ -1,11 +1,11 @@
-import { api } from "/scripts/common/api.js"
+import {api} from "/scripts/common/api.js"
 import {listImageByHabitat} from "/scripts/entities/habitat.js"
 
 export function fetchHabitatsForVisitor() {
     api.get('/habitats')
         .then(habitats => {
             let rows = '';
-            let images ='';
+            let images = '';
             let index = 0;
             habitats.forEach(habitat => {
 
@@ -25,7 +25,7 @@ export function fetchHabitatsForVisitor() {
                     <div class="col-lg-6 mb-4 pres">
                         <h4>${habitat.nom}</h4>
                     </div>
-                `+ images;
+                ` + images;
                     document.getElementById('listHabitats').innerHTML = rows;
                 }).catch(error => console.error('Error fetching images by habitat:', error));
             });

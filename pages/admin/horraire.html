@@ -9,49 +9,14 @@
             <thead>
             <tr>
                 <th>Jour</th>
-                <th data-editable="true">Heure ouverture</th>
-                <th data-editable="true">Heure fermeture</th>
+                <th class="text-center" data-editable="true">Heure ouverture</th>
+                <th class="text-center" data-editable="true">Heure fermeture</th>
             </tr>
             </thead>
-            <tbody id="horraireRows">
-            <tr>
-                <td>Lundi</td>
-                <td class="editable" onclick="editHorraire(event)">09:00</td>
-                <td class="editable" onclick="editHorraire(event)">18:00</td>
-            </tr>
-            <tr>
-                <td>Mardi</td>
-                <td class="editable" onclick="editHorraire(event)">09:00</td>
-                <td class="editable" onclick="editHorraire(event)">18:00</td>
-            </tr>
-            <tr>
-                <td>Mercredi</td>
-                <td class="editable" onclick="editHorraire(event)">09:00</td>
-                <td class="editable" onclick="editHorraire(event)">18:00</td>
-            </tr>
-            <tr>
-                <td>Jeudi</td>
-                <td class="editable" onclick="editHorraire(event)">09:00</td>
-                <td class="editable" onclick="editHorraire(event)">18:00</td>
-            </tr>
-            <tr>
-                <td>Vendredi</td>
-                <td class="editable" onclick="editHorraire(event)">09:00</td>
-                <td class="editable" onclick="editHorraire(event)">18:00</td>
-            </tr>
-            <tr>
-                <td>Samedi</td>
-                <td class="editable" onclick="editHorraire(event)">09:00</td>
-                <td class="editable" onclick="editHorraire(event)">18:00</td>
-            </tr>
-            <tr>
-                <td>Dimanche</td>
-                <td class="editable" onclick="editHorraire(event)">09:00</td>
-                <td class="editable" onclick="editHorraire(event)">18:00</td>
-            </tr>
+            <tbody id="horrairesRows">
             </tbody>
         </table>
-        <button id="saveBtn" class="btn btn-primary">Valider</button>
+        <button id="saveBtn" class="btn btn-primary" onclick="saveHorraires()">Valider</button>
     </div>
 </div>
 </section>

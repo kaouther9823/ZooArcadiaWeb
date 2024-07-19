@@ -61,6 +61,27 @@ export function fetchNouriture(idSelect) {
         });
 }
 
+export function fetchListHabitats(idSelect) {
+    fetch(`${API_BASE_URL}/habitats`)  // Assurez-vous que l'URL de l'API est correcte
+        .then(response => response.json())
+        .then(data => {
+            const select = document.getElementById(idSelect);
+            select.innerHTML = ''; // Clear the select element
+            data.forEach(habitat => {
+                const option = document.createElement('option');
+                option.value = habitat.id;
+                option.textContent = habitat.nom;
+                select.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error('Erreur lors de la récupération des races:', error);
+            const select = document.getElementById(idSelect);
+            select.innerHTML = '<option value="">Erreur de chargement</option>';
+        });
+}
+
+
 export function fetchAllAnimaux(idSelect) {
     fetch(`${API_BASE_URL}/animaux`)  // Assurez-vous que l'URL de l'API est correcte
         .then(response => response.json())
@@ -79,4 +100,8 @@ export function fetchAllAnimaux(idSelect) {
             const select = document.getElementById(idSelect);
             select.innerHTML = '<option value="">Erreur de chargement</option>';
         });
+}
+
+export function initLabelAddModal(entite) {
+    document.getElementById('addModalLabel').innerText = "Ajouter un " + entite;
 }
