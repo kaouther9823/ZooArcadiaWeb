@@ -65,6 +65,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/employe/avis">Avis</a></li>
+                        <li><a class="dropdown-item" href="/employe/rapports">Rapports</a></li>
                     </ul>
                 </li>
 
@@ -227,9 +228,7 @@
 
         if (carouselElement) {
             console.log('Carousel element found:', carouselElement);
-            var carousel = new bootstrap.Carousel(carouselElement);
-        } else {
-            console.error('Carousel element not found');
+            const carousel = new bootstrap.Carousel(carouselElement);
         }
     });
 

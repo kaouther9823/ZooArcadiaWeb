@@ -105,3 +105,19 @@ export function fetchAllAnimaux(idSelect) {
 export function initLabelAddModal(entite) {
     document.getElementById('addModalLabel').innerText = "Ajouter un " + entite;
 }
+
+export function formatDate(date) {
+    {
+        let result ="";
+        if (date) {
+            const dateStr = date.substring(0, 10)
+            if (dateStr) {
+                const elements = dateStr.split('-');
+                if (elements.length === 3) {
+                    result =  elements[2] + '/' + elements[1] + '/' + elements[0];
+                }
+            }
+        }
+        return result;
+    }
+}
