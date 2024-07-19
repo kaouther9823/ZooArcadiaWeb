@@ -9,9 +9,13 @@ import {addRapport, deleteRapport, editRapport, fetchRapports, filterReports} fr
 import {displayReview, fetchAvis, hideMessage, saveAvis, updateAvis} from "/scripts/entities/avis.js"
 import {addUser, deleteUser, editUser, fetchUsers, showInputsPasswd} from "/scripts/entities/user.js";
 import {editHorraire, saveHorraires, fetchHorraires} from "/scripts/entities/horraire.js";
-
+import {
+    addRapportEmploye,
+    deleteRapportEmploye,
+    editRapportEmploye,
+    fetchRapportsEmploye
+} from "/scripts/entities/rapportEmploye.js";
 document.addEventListener('DOMContentLoaded', function () {
-    showAndHideElementsForRoles();
     let trouve = true;
     switch (location.pathname) {
         case '/':
@@ -59,6 +63,11 @@ document.addEventListener('DOMContentLoaded', function () {
             fetchNouriture('nouriture')
             fetchAllAnimaux('animal');
             break;
+        case '/employe/rapports':
+            fetchRapportsEmploye();
+            fetchNouriture('nouriture')
+            fetchAllAnimaux('animal');
+            break;
         default:
             trouve = false;
     }
@@ -102,6 +111,9 @@ window.showInputsPasswd = showInputsPasswd;
 window.initLabelAddModal = initLabelAddModal;
 window.saveHorraires = saveHorraires;
 window.addAnimalInHabitatView= addAnimalInHabitatView;
+window.addRapportEmploye = addRapportEmploye;
+window.editRapportEmploye = editRapportEmploye;
+window.deleteRapport = deleteRapportEmploye;
 
 export function resetForm() {
     const form = document.getElementsByClassName('needs-validation')[0];
