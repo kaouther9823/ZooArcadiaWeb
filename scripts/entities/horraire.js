@@ -1,4 +1,4 @@
-import {api} from "/scripts/common/api.js";
+import {api, headers, SERVEUR_URL} from "/scripts/common/api.js";
 
 export function editHorraire(event) {
 
@@ -59,4 +59,15 @@ export function fetchHorraires() {
             });
             document.getElementById('horrairesRows').innerHTML = rows;
     })
+}
+
+export function fetchHorrairesFooter() {
+    let rows ="<h4>Horaires</h4>";
+    api.get('/horraires/')
+        .then(horraires => {
+            horraires.forEach(horraire => {
+                rows += `<p>${horraire.jour} : ${horraire.heureOuverture} - ${horraire.heureFermeture}</p>`;
+            });
+            document.getElementById('horraires-footer').innerHTML = rows;
+        })
 }

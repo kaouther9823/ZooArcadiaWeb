@@ -30,22 +30,20 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Accueil</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" data-show="visiteur">
                     <a class="nav-link" href="/services">Services</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" data-show="visiteur">
                     <a class="nav-link" href="/habitats">Habitats</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/connexion">Connexion</a>
-                </li>
-                <li class="nav-item">
+
+                <li class="nav-item" data-show="visiteur">
                     <a class="nav-link" href="/avis">Avis</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" data-show="visiteur">
                     <a class="nav-link" href="/contact">Contact</a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" data-show="admin">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Administration
                     </a>
@@ -59,17 +57,18 @@
                         <li><a class="dropdown-item" href="/admin/users">Utilisateurs</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" data-show="employe">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Employe
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/employe/avis">Avis</a></li>
-                        <li><a class="dropdown-item" href="/employe/rapports">Rapports</a></li>
+                        <li><a class="dropdown-item" href="/employe/avis">Validation des avis</a></li>
+                        <li><a class="dropdown-item" href="/employe/rapports">Rapports sur l'alimentation des animaux</a></li>
+                        <li><a class="dropdown-item" href="/admin/services">Service</a></li>
                     </ul>
                 </li>
 
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" data-show="veterinaire">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Soins et suivi
                     </a>
@@ -78,6 +77,20 @@
                         <li><a class="dropdown-item" href="/veterinaire/rapportsAlimentation">Rapports sur l'alimentation des animaux</a></li>
                         <li><a class="dropdown-item" href="/veterinaire/commentaires">Commentaires sur les habitats</a></li>
                     </ul>
+                </li>
+
+                <li class="nav-item dropdown" data-show="connected">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Compte
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/profil">Profil</a></li>
+                        <li><a class="dropdown-item" onclick="logout()">Deconnexion</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item" data-show="disconnected">
+                    <a class="nav-link" href="/connexion">Connexion</a>
                 </li>
             </ul>
         </div>
@@ -163,26 +176,27 @@
             <p>Email : info@zooecologique.fr</p>
         </div>
 
-        <!-- Section Horaires et Tarifs -->
+        <!-- Section Horaires -->
+        <div id="horraires-footer" class="footer-section hours-prices">
+            <!-- Contenu dynamique -->
+        </div>
+        <!-- Section Tarifs -->
         <div class="footer-section hours-prices">
-            <h4>Horaires et Tarifs</h4>
-            <p>Lundi - Vendredi : 9h00 - 18h00</p>
-            <p>Samedi - Dimanche : 10h00 - 19h00</p>
+            <h4>Tarifs</h4>
             <p>Tarif adulte : 20€</p>
             <p>Tarif enfant (3-12 ans) : 10€</p>
             <p>Enfants de moins de 3 ans : Gratuit</p>
         </div>
-
         <!-- Section Plan du Site -->
         <div class="footer-section sitemap">
             <h4>Plan du Site</h4>
             <ul>
-                <li><a href="#home">Accueil</a></li>
-                <li><a href="#about">À propos</a></li>
-                <li><a href="#habitats">Habitats</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#connexion">Connexion</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="/">Accueil</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><a href="/habitats">Habitats</a></li>
+                <li><a href="/avis">Avis</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/connexion">Connexion</a></li>
             </ul>
         </div>
 

@@ -1,4 +1,4 @@
-import {api} from "/scripts/common/api.js";
+import {api, API_BASE_URL, headers, SERVEUR_URL} from "/scripts/common/api.js";
 import {INIT_PAGE, ITEM_PER_PAGE} from "/scripts/common/commun.js";
 
 export function saveAvis() {
@@ -10,7 +10,7 @@ export function saveAvis() {
     } else {
         const pseudoInput = document.getElementById('pseudo');
         const commentaireInput = document.getElementById('commentaire');
-        const radios = document.getElementsByName('evaluation');
+        const radios = document.getElementsByName('rating');
         let rating = 0;
         radios.forEach(radio => {
             if (radio.checked) {
@@ -19,12 +19,13 @@ export function saveAvis() {
         })
         const avisItem = {
             pseudo: pseudoInput.value,
-            note: rating,
+            note: Number(rating),
             commentaire: commentaireInput.value.trim()
         };
         api.post(`/avis/`, avisItem)
             .then(() => {
                 document.getElementById("message").style.display = 'block';
+                document.getElementById("saveBtn").disabled = true;
             })
             .catch(error => {
                 console.error('There was an error!', error);
@@ -48,6 +49,7 @@ export function fetchAvis(page = INIT_PAGE, avisPerPage = ITEM_PER_PAGE) {
                 row = `
                     <tr>
                         <td>${avis.pseudo}</td>
+                        <td>${avis.note}</td>
                         <td>${avis.commentaire}</td>
                         <td>${treatedMessage}</td>
                         <td>
@@ -131,11 +133,10 @@ function renderPagination(totalPages, currentPage) {
 
 export function displayReview() {
     setTimeout(() => {
-        let rows = "";
-        //document.getElementById('visitors-reviews"').innerHTML = "";
-        api.get('/avis/home')
+       api.get('/avis/home')
             .then(reviews => {
                 reviews.forEach(review => {
+                    let rows = "";
                     let rating = `<div class="rating">`;
                     for (let i = 0; i < review.note; i++) {
                         rating += `<span class="star">&#9733;</span>`;

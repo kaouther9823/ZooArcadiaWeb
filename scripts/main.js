@@ -1,14 +1,15 @@
 import {addAnimal, addAnimalInHabitatView, deleteAnimal, editAnimal, fetchAnimaux} from "/scripts/entities/animal.js";
 import {addHabitat, deleteHabitat, editHabitat, fetchHabitats, showHabitat} from "/scripts/entities/habitat.js";
 import {addService, deleteService, editService, fetchServices} from "/scripts/entities/service.js";
-import {fetchHabitatsForVisitor} from "/scripts/visiteur/habitat.js";
+import {fetchHabitatsForVisitor, redirectToDetailsHabitat} from "/scripts/visiteur/habitat.js";
 import {fetchServicesForVisitor} from "/scripts/visiteur/service.js";
+import {fetchAnnimauxForVisitor, showAnimalImages, redirectToDetailsAnimal, showDetailsAnimal} from "/scripts/visiteur/animal.js";
 import {fetchAllAnimaux, fetchEtat, fetchNouriture, fetchRaces, fetchListHabitats, initLabelAddModal} from "/scripts/common/commun.js"
 import {addRapport, deleteRapport, editRapport, fetchRapports, filterReports} from "/scripts/entities/rapport.js";
 import {addCommentaire, deleteCommentaire, editCommentaire, fetchCommentaires} from "/scripts/entities/commentaireVeterinaire.js";
 import {displayReview, fetchAvis, hideMessage, saveAvis, updateAvis} from "/scripts/entities/avis.js"
 import {addUser, deleteUser, editUser, fetchUsers, showInputsPasswd} from "/scripts/entities/user.js";
-import {editHorraire, saveHorraires, fetchHorraires} from "/scripts/entities/horraire.js";
+import {editHorraire, saveHorraires, fetchHorraires, fetchHorrairesFooter} from "/scripts/entities/horraire.js";
 import {
     addRapportEmploye,
     deleteRapportEmploye,
@@ -16,7 +17,11 @@ import {
     fetchRapportsEmploye,
     filterReportsEmployes
 } from "/scripts/entities/rapportEmploye.js";
+import {login, logout, showAndHideElementsForRoles, loadUserInfos} from "/scripts/login.js";
+
 document.addEventListener('DOMContentLoaded', function () {
+    showAndHideElementsForRoles();
+    fetchHorrairesFooter();
     let trouve = true;
     switch (location.pathname) {
         case '/':
@@ -69,6 +74,9 @@ document.addEventListener('DOMContentLoaded', function () {
             fetchNouriture('nouriture')
             fetchAllAnimaux('animal');
             break;
+        case '/employe/avis':
+            fetchAvis();
+            break;
         case '/veterinaire/commentaires':
             fetchListHabitats('habitat')
             fetchCommentaires();
@@ -78,23 +86,34 @@ document.addEventListener('DOMContentLoaded', function () {
             fetchNouriture('nouriture')
             fetchAllAnimaux('animal');
             break;
+        case '/profil':
+            loadUserInfos();
+            break;
         default:
             trouve = false;
     }
 
     if (trouve === false) {
-        if (location.pathname.includes("/admin/habitat/")) {
-            const urlArray = location.pathname.split("/");
-            const lastElement = urlArray[urlArray.length - 1];
-            if (!isNaN(lastElement) && lastElement !== "") {
-                showHabitat(lastElement)
-                fetchAnimaux(lastElement);
-                fetchEtat('animal-race');
-                fetchRaces('animal-etat');
+        const urlArray = location.pathname.split("/");
+        const lastElement = urlArray[urlArray.length - 1];
+        if (!isNaN(lastElement) && lastElement !== "") {
+        if (location.pathname.includes("/habitat/")) {
+                if (location.pathname.includes("/admin/habitat/")) {
+                    showHabitat(lastElement)
+                    fetchAnimaux(lastElement);
+                    fetchEtat('animal-race');
+                    fetchRaces('animal-etat');
+                } else {
+                    showHabitat(lastElement);
+                    fetchAnnimauxForVisitor(lastElement);
+                }
             }
         }
+        if (location.pathname.includes("/animal/")) {
+            showDetailsAnimal(lastElement);
+            showAnimalImages(lastElement);
+        }
     }
-
 });
 
 window.addAnimal = addAnimal;
@@ -128,8 +147,19 @@ window.addCommentaire = addCommentaire;
 window.editCommentaire = editCommentaire;
 window.deleteCommentaire = deleteCommentaire;
 window.filterReportsEmployes = filterReportsEmployes;
-export function resetForm() {
-    const form = document.getElementsByClassName('needs-validation')[0];
+window.showAndHideElementsForRoles = showAndHideElementsForRoles;
+window.login = login;
+window.logout = logout;
+window.loadUserInfos = loadUserInfos;
+window.redirectToDetailsHabitat = redirectToDetailsHabitat;
+window.redirectToDetailsAnimal = redirectToDetailsAnimal;
+
+export function resetForm(idForm = null) {
+
+    let form = document.getElementsByClassName('needs-validation')[0];
+    if (idForm !== null && idForm !== undefined) {
+        form = document.getElementById(idForm);
+    }
     form.reset();
     form.classList.remove('was-validated')
 }
