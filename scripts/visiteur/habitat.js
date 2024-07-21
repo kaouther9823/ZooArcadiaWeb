@@ -5,26 +5,16 @@ export function fetchHabitatsForVisitor() {
     api.get('/habitats')
         .then(habitats => {
             let rows = '';
-            let images = '';
             habitats.forEach(habitat => {
-
                 listImageByHabitat(habitat.id).then(data => {
                     if (data && data.length > 0) {
-                        data.forEach(image => {
-                            images += `
+                            rows += `
                                 <div class="col-lg-6 mb-4 image-card text-white pres">
-                                    <img src="data:image/jpeg;base64,${image.base64Data}" class="img-fluid rounded d-block w-100 h-100"
-                                    alt="${habitat.nom}${image.imageId}">
-                                    <p class="titre-image image-card">${habitat.nom}${image.imageId}</p>
-                                </div>
-                            `;
-                        });
+                                    <img src="data:image/jpeg;base64,${data[0].base64Data}" onclick="redirectToDetailsHabitat(${habitat.id})"  class="img-fluid rounded d-block w-100 h-100"
+                                    alt="${habitat.nom}">
+                                    <p class="titre-image image-card">${habitat.nom}</p>
+                                </div>`;
                     }
-                    rows += `
-                    <div class="col-lg-6 mb-4 pres">
-                        <h4>${habitat.nom}</h4>
-                    </div>
-                ` + images;
                     document.getElementById('listHabitats').innerHTML = rows;
                 }).catch(error => console.error('Error fetching images by habitat:', error));
             });
@@ -32,4 +22,8 @@ export function fetchHabitatsForVisitor() {
         .catch(error => {
             console.error('There was an error!', error);
         });
+}
+
+export function redirectToDetailsHabitat(id) {
+    window.location.href='/habitat/'+id;
 }

@@ -51,7 +51,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="habitatModal" tabindex="-1" aria-labelledby="habitatModalLabel" aria-hidden="true">
+    <div class="modal fade" id="animalModal" tabindex="-1" aria-labelledby="habitatModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-content">
@@ -74,7 +74,7 @@
                     <div id="uploadResultForAdd"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="reset" onclick="resetForm()" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="button" onclick="resetForm('animalForm')" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                         <button id="addAnimalBtn" type="submit" onclick="addAnimalInHabitatView()" class="btn btn-primary">Valider</button>
                     </div>
                     </form>

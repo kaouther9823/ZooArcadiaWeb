@@ -1,4 +1,4 @@
-import {api, API_BASE_URL} from '/scripts/common/api.js';
+import {api} from '/scripts/common/api.js';
 import {INIT_PAGE, ITEM_PER_PAGE} from "/scripts/common/commun.js";
 
 export function editAnimal(id) {
@@ -9,11 +9,15 @@ export function editAnimal(id) {
             document.getElementById('animal-prenom').value = animal.prenom;
             document.getElementById('animal-etat').value = animal.etat.id;
             document.getElementById('animal-race').value = animal.race.id;
-            document.getElementById('animal-habitat').value = animal.habitat.id;
-            const animalModal = new bootstrap.Modal(document.getElementById('animalModal'), {
-                keyboard: false
-            });
-            animalModal.show();
+            if (document.getElementById('animal-habitat')) {
+                document.getElementById('animal-habitat').value = animal.habitat.id;
+            }
+            if (document.getElementById('animalModal')) {
+                const animalModal = new bootstrap.Modal(document.getElementById('animalModal'), {
+                    keyboard: false
+                });
+                animalModal.show();
+            }
         })
         .catch(error => {
             console.error('There was an error!', error);
@@ -25,11 +29,11 @@ export function fetchAnimaux(habitatId, page = INIT_PAGE, animauxPerPage = ITEM_
     const idHabitat = urlArray[urlArray.length - 1];
     let url;
     if (!isNaN(idHabitat) && idHabitat !== "") {
-        url = `${API_BASE_URL}/animaux/habitat/${idHabitat}`;
+        url = `/animaux/habitat/${idHabitat}`;
     } else {
-        url = `${API_BASE_URL}/animaux`;
+        url = `/animaux`;
     }
-    fetch(`${url}`).then(response => response.json())
+    api.get(`${url}`)
         .then(animaux => {
             const totalServices = animaux.length;
             const totalPages = Math.ceil(totalServices / animauxPerPage);
@@ -90,12 +94,12 @@ export function deleteAnimal(id) {
     }
 }
 
-function listImagesByAnimal(id) {
+export function listImagesByAnimal(id) {
     return api.get(`/animaux/${id}/images`);
 }
 
 
-function getImageById(id) {
+export function getImageById(id) {
     return api.get(`/animaux/images/${id}`);
 
 }

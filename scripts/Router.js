@@ -1,8 +1,10 @@
 import Route from "./Route.js";
 import {allRoutes, websiteName} from "./allRoutes.js";
+import {getRole, isConnected} from "/scripts/login.js";
 
 // Création d'une route pour la page 404 (page introuvable)
 const route404 = new Route("/404", "Page introuvable", "/pages/404.html");
+const route403 = new Route("/403", "Page inaccessible", "/pages/403.html");
 
 // Fonction pour récupérer la route correspondant à une URL donnée
 const getRouteByUrl = (url) => {
@@ -24,10 +26,20 @@ const getRouteByUrl = (url) => {
             }
         }
     });
+    const role = getRole();
 
     // Si aucune correspondance n'est trouvée, on retourne la route 404
     if (currentRoute != null) {
-        return currentRoute;
+        const roles = currentRoute.roles;
+        if (!roles || roles.length === 0) {
+            return currentRoute;
+        } else {
+            if (roles.includes(role)){
+                return currentRoute;
+            } else {
+                return route403;
+            }
+        }
     } else {
         return route404;
     }
@@ -51,7 +63,7 @@ const LoadContentPage = async () => {
     }
 
     // Ajout du contenu JavaScript
-    if (actualRoute.pathJS !== []) {
+/*    if (actualRoute.pathJS !== []) {
         // Création d'une balise script
         actualRoute.pathJS.forEach(pathScript => {
             let scriptTag = document.createElement("script");
@@ -61,7 +73,7 @@ const LoadContentPage = async () => {
         })
         // Ajout de la balise script au corps du document
 
-    }
+    }*/
 
     // Changement du titre de la page
     document.title = actualRoute.title + " - " + websiteName;

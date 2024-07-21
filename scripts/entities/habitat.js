@@ -36,7 +36,9 @@ function createImageCard(image) {
 export function editHabitat(id) {
     api.get(`${controllerUrl}${id}`)
         .then(habitat => {
-            document.getElementById('addModalLabel').innerText = "Editer un habitat";
+            if (document.getElementById('addModalLabel')) {
+                document.getElementById('addModalLabel').innerText = "Editer un habitat";
+            }
             document.getElementById('idHabitat').value = habitat.id;
             document.getElementById('nom').value = habitat.nom;
             document.getElementById('description').value = habitat.description;
