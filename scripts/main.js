@@ -18,6 +18,7 @@ import {
     filterReportsEmployes
 } from "/scripts/entities/rapportEmploye.js";
 import {login, logout, showAndHideElementsForRoles, loadUserInfos} from "/scripts/login.js";
+import {sendDemandeContact} from "/scripts//visiteur/contact.js";
 
 document.addEventListener('DOMContentLoaded', function () {
     showAndHideElementsForRoles();
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fetchHabitats();
             break;
         case '/avis':
+        case '/contact':
             hideMessage();
             break;
 
@@ -153,6 +155,7 @@ window.logout = logout;
 window.loadUserInfos = loadUserInfos;
 window.redirectToDetailsHabitat = redirectToDetailsHabitat;
 window.redirectToDetailsAnimal = redirectToDetailsAnimal;
+window.sendDemandeContact = sendDemandeContact;
 
 export function resetForm(idForm = null) {
 
