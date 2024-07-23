@@ -62,7 +62,7 @@ export function fetchUsers(page = INIT_PAGE, usersPerPage = ITEM_PER_PAGE) {
 }
 
 export function deleteUser(id) {
-    if (confirm('Êtes-vous sûr de vouloir supprimer ce user ?')) {
+    if (confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
         api.delete(`/users/${id}`)
             .then(() => {
                 fetchUsers();

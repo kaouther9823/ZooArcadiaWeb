@@ -12,7 +12,7 @@ export function fetchAnnimauxForVisitor(idHabitat) {
                         const imageId = data[data.length-1].imageId;
                         getImageById(imageId).then(image => {
                             rows += `
-                                <div class="col p-3" onclick="redirectToDetailsAnimal(${animal})">`;
+                                <div class="col p-3" onclick="redirectToDetailsAnimal(${animal.id})">`;
                             if (index % 3 === 0) {
                                 rows += '<div class="image-card-col1 text-white">';
                             } else if (index % 3 === 1) {
@@ -49,7 +49,7 @@ export function showAnimalImages(id) {
                       <div class="col p-3">`;
                 if (index % 2 === 0) {
                     rows += '<div class="image-card-col1 text-white">';
-                } else  {
+                } else {
                     rows += '<div class="image-card-col3 text-white">';
                 }
                 rows += `<img src="data:image/jpeg;base64,${image.base64Data}" class="rounded gallery-image"/>
@@ -58,16 +58,15 @@ export function showAnimalImages(id) {
                                 </div>`;
                 document.getElementById('listImages').innerHTML = rows;
                 index++;
-            }).catch(error => {
-                console.error('There was an error!', error);
-            });
+            })
         }
-    })
+        }).catch(error => {
+            console.error('There was an error!', error);
+        });
 }
 
-export function redirectToDetailsAnimal(animal) {
-    incrementConsultation(animal)
-    window.location.href='/animal/'+animal.id;
+export function redirectToDetailsAnimal(id) {
+    window.location.href='/animal/'+id;
 }
 
 export function showDetailsAnimal(id) {
@@ -79,6 +78,7 @@ export function showDetailsAnimal(id) {
             document.getElementById('animal-race').value = animal.race.label;
             document.getElementById('animal-habitat').value = animal.habitat.nom;
             document.getElementById('nomAnimal').innerHTML = animal.prenom;
+            incrementConsultation(animal)
         })
         .catch(error => {
             console.error('There was an error!', error);
@@ -86,9 +86,7 @@ export function showDetailsAnimal(id) {
 }
 
 function incrementConsultation(animal) {
-    const animalName = animal.getAttribute('data-animal-name');
-
-    api.put('/consultations', animal)
+    api.post('/consultations/', animal)
         .then(data => {
             console.log(data.message);
         })

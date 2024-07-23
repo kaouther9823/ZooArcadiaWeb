@@ -19,6 +19,7 @@ import {
 } from "/scripts/entities/rapportEmploye.js";
 import {login, logout, showAndHideElementsForRoles, loadUserInfos} from "/scripts/login.js";
 import {sendDemandeContact} from "/scripts//visiteur/contact.js";
+import {fetchConsultations} from "/scripts/entities/consultation.js"
 
 document.addEventListener('DOMContentLoaded', function () {
     showAndHideElementsForRoles();
@@ -91,6 +92,9 @@ document.addEventListener('DOMContentLoaded', function () {
         case '/profil':
             loadUserInfos();
             break;
+        case '/admin/consultations':
+            fetchConsultations();
+            break;
         default:
             trouve = false;
     }
@@ -103,8 +107,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (location.pathname.includes("/admin/habitat/")) {
                     showHabitat(lastElement)
                     fetchAnimaux(lastElement);
-                    fetchEtat('animal-race');
-                    fetchRaces('animal-etat');
+                    fetchEtat('animal-etat');
+                    fetchRaces('animal-race');
                 } else {
                     showHabitat(lastElement);
                     fetchAnnimauxForVisitor(lastElement);

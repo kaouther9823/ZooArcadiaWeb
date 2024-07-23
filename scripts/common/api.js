@@ -7,7 +7,7 @@ export const headers = {
 export const authorization = {
     'Authorization': `Bearer ${token}`
 };
-if (token !== "") {
+if (token !== "" && token!== "" && token !== null) {
     headers.Authorization = `Bearer ${token}`;
 }
 

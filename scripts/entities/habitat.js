@@ -93,7 +93,7 @@ function createHabitatRow(habitat) {
 }
 
 export function deleteHabitat(id) {
-    if (confirm('Êtes-vous sûr de vouloir supprimer ce habitat ?')) {
+    if (confirm('Êtes-vous sûr de vouloir supprimer cet habitat ?')) {
         api.delete(`${controllerUrl}${id}`)
             .then(response => {
                 console.log(response);
