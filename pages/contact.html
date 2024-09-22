@@ -1,0 +1,31 @@
+<!-- Section Contact -->
+<section class="py-3">
+    <div class="container">
+        <div class="section-header text-center mb-4 pres">
+            <h2>Contactez-nous</h2>
+        </div>
+        <form id="contactForm" class="form-row g-3 needs-validation" novalidate>
+            <div class="form-row">
+                <div class="form-group mb-3">
+                    <label for="inputName">Nom</label>
+                    <input type="text" class="form-control" id="inputName" placeholder="Votre nom" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="inputEmail">Email</label>
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Votre email" required>
+                    <div class="invalid-feedback">Veuillez saisir un email valide.</div>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label for="inputMessage">Message</label>
+                <textarea class="form-control" id="inputMessage" rows="4" placeholder="Votre message" required></textarea>
+            </div>
+            <div id="message" class="alert alert-success pt-3" role="alert">
+                <p id="responseAvis">Votre demande a été soumise, elle sera traitée par nos employés sous 48 heures.</p>
+            </div>
+            <div class="text-center pt-3">
+                <button type="submit" id="sendBtn" class="btn btn-primary" onclick="sendDemandeContact()">Envoyer</button>
+            </div>
+        </form>
+    </div>
+</section>

@@ -1,0 +1,77 @@
+<section class="zoo-presentation">
+    <div class="container">
+        <div class="section-header text-center mb-4 pres">
+            <h2>Rapports alimentation animaux</h2>
+        </div>
+        <div class="row p-3" id="btn-new-div">
+            <div class="col text-end">
+                <button type="button" class="btn btn-primary" onclick="initLabelAddModal('rapport')" data-bs-toggle="modal" data-bs-target="#addModal">
+                    Nouveau Rapport
+                </button>
+            </div>
+        </div>
+        <div class="row" id="rapportTable">
+            <div class="row">
+                <table class="table table-striped nowrap w-100" id="rapportEmployeTable">
+                    <thead>
+                    <tr>
+                        <th>Employe</th>
+                        <th>Animal</th>
+                        <th>Race</th>
+                        <th>Nourriture</th>
+                        <th>Quantité(g)</th>
+                        <th>Date d'alimentation</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="rapportRows">
+                    </tbody>
+                </table>
+                <!-- Pagination -->
+                <nav>
+                    <ul class="pagination justify-content-center" id="pagination">
+                        <!-- Les boutons de pagination seront injectés ici -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="addModalLabel"></h1>
+                            <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form id="rapportForm" class="row g-3 needs-validation" novalidate>
+                        <div class="form-group modal-body mb-3">
+
+                            <label class="form-label" for="id" hidden></label>
+                            <input class="form-control" id="id" name="id" hidden>
+                            <label class="form-label" for="animal">Animal</label>
+                            <select class="form-select" id="animal" name="animal" aria-label="Animal select" required></select>
+                            <div class="invalid-feedback">Veuillez sélectionner un animal.</div>
+
+                            <label class="form-label" for="nouriture">Nouriture</label>
+                            <select class="form-select" id="nouriture" name="nouriture" aria-label="Nouriture select" required></select>
+                            <div class="invalid-feedback">Veuillez sélectionner une nourriture.</div>
+
+                            <label class="form-label" for="quantite">Quantite</label>
+                            <input class="form-control" type="number" id="quantite" name="quantite" aria-label="Quantite" required>
+                            <div class="invalid-feedback">Veuillez entrer une quantité.</div>
+
+                            <label class="form-label" for="date">Date alimentation</label>
+                            <input class="form-control" type="date" id="date" name="date" aria-label="Date alimentation" required>
+                            <div class="invalid-feedback">Veuillez entrer une date.</div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <button type="submit" onclick="addRapportEmploye()" class="btn btn-primary">Valider</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

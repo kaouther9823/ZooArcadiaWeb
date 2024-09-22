@@ -1,0 +1,72 @@
+<section class="py-3">
+    <div class="container">
+    <div class="section-header text-center mb-4 pres">
+        <h2>Gestion des Animaux</h2>
+    </div>
+
+                <div class="row p-3">
+                    <div class="col text-end">
+                        <button type="button" class="btn btn-primary" onclick="initLabelAddModal('animal')" data-bs-toggle="modal" data-bs-target="#animalModal">
+                            Nouvel animal
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <table id="animalTable" class="table table-striped nowrap w-100">
+                        <thead>
+                        <tr>
+                            <th>Prénom</th>
+                            <th>Race</th>
+                            <th>Habitat</th>
+                            <th>Etat</th>
+                            <th>Image</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody id="animalRows">
+                        </tbody>
+                    </table>
+                    <!-- Pagination -->
+                    <nav>
+                        <ul class="pagination justify-content-center" id="pagination">
+                            <!-- Les boutons de pagination seront injectés ici -->
+                        </ul>
+                    </nav>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="animalModal" tabindex="-1" aria-labelledby="animalModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="addModalLabel"></h1>
+                                    <button type="button" id="btn-close-animal-modal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form id="animalForm" class="row g-3 needs-validation" novalidate>
+                                    <div class="modal-body mb-3">
+                                        <label class="form-label" for="animal-id" hidden>Id</label>
+                                        <input class="form-control" type="text" id="animal-id" name="animal-id" hidden>
+                                        <label class="form-label" for="animal-prenom">Prénom</label>
+                                        <input class="form-control" type="text" id="animal-prenom" name="animal-prenom" required>
+                                        <label class="form-label" for="animal-race">Habitat</label>
+                                        <select class="form-select" id="animal-habitat" name="animal-habitat" aria-label="Default select example"></select>
+                                        <label class="form-label" for="animal-race">Race</label>
+                                        <select class="form-select" id="animal-race" name="animal-race" aria-label="Default select example"></select>
+                                        <label class="form-label" for="animal-etat">Etat</label>
+                                        <select class="form-select" id="animal-etat" name="animal-etat" aria-label="Default select example"></select>
+                                        <label class="form-label" for="animal-images">Images</label>
+                                        <input class="form-control" type="file" id="animal-images" name="animal-images" accept="image/*" multiple required>
+                                        <div id="uploadResultForAdd"></div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="reset" onclick="resetForm()" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                        <button id="addAnimalBtn" type="submit" onclick="addAnimal()" class="btn btn-primary">Valider</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+</section>

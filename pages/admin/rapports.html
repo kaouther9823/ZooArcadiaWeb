@@ -1,0 +1,89 @@
+<section class="zoo-presentation">
+    <div class="container">
+        <div class="section-header text-center mb-4 pres">
+            <h2>Rapports vertérinaire</h2>
+        </div>
+
+
+        <!-- Filtres -->
+        <div class="row mb-4 pt-3">
+            <div class="col-md-3">
+                <label for="animalFilter">Filtrer par Animal</label>
+                <input type="text" id="animalFilter" class="form-control" placeholder="Nom de l'animal">
+            </div>
+            <div class="col-md-3">
+                <label for="startDateFilter">Date de Début</label>
+                <input type="date" id="startDateFilter" class="form-control">
+            </div>
+            <div class="col-md-3">
+                <label for="endDateFilter">Date de Fin</label>
+                <input type="date" id="endDateFilter" class="form-control">
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <button id="filterButton" class="btn btn-primary" onclick="filterReports()">Rechercher</button>
+            </div>
+
+        <div class="row" id="rapportTable">
+            <div class="row pt-5">
+                <table class="table table-striped nowrap w-100" id="habitatTable">
+                    <thead>
+                    <tr>
+                        <th>Verterinaire</th>
+                        <th>Animal</th>
+                        <th>Race</th>
+                        <th>Etat</th>
+                        <th>Nourriture</th>
+                        <th>Quantité(g)</th>
+                        <th>Date de passage</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="rapportRows">
+                    </tbody>
+                </table>
+                <!-- Pagination -->
+                <nav>
+                    <ul class="pagination justify-content-center" id="pagination">
+                        <!-- Les boutons de pagination seront injectés ici -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Détails du Rapport</h1>
+                            <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="form-group modal-body mb-3">
+
+                            <label class="form-label" for="idRapport" hidden></label>
+                            <input type="text" class="form-control" id="idRapport" name="idRapport" hidden>
+                            <label class="form-label" for="animal">Animal</label>
+                            <select class="form-select" id="animal" name="animal" aria-label="Animal select" required></select>
+
+                            <label class="form-label" for="etat">Etat</label>
+                            <select class="form-select" id="etat" name="etat" aria-label="Etat select" readonly></select>
+
+                            <label class="form-label" for="nouriture">Nouriture</label>
+                            <select class="form-select" id="nouriture" name="nouriture" aria-label="Nouriture select" readonly></select>
+
+                            <label class="form-label" for="quantite">Quantite</label>
+                            <input class="form-control" type="number" id="quantite" name="quantite" aria-label="Quantite" readonly>
+
+                            <label class="form-label" for="commentaire">Commentatire</label>
+                            <textarea class="form-control auto-height" id="commentaire" name="commentaire" readonly></textarea>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Retour</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
