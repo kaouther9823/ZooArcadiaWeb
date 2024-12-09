@@ -2,11 +2,11 @@ import {api, API_BASE_URL, headers, SERVEUR_URL} from "/scripts/common/api.js";
 import {INIT_PAGE, ITEM_PER_PAGE} from "/scripts/common/commun.js";
 
 export function saveAvis() {
-    event.preventDefault(); // Empêche la soumission par défaut
+    event.preventDefault(); // Empêche la soumission par défaut du formulaire
 
     const form = document.getElementById('ratingForm');
-    if (form.checkValidity() === false) {
-        event.stopPropagation();
+    if (form.checkValidity() === false) { // vérifier la validation de la formulaire
+        event.stopPropagation(); // si invalide => bloquer l'appel et afficher les messages d'erreur
     } else {
         const pseudoInput = document.getElementById('pseudo');
         const commentaireInput = document.getElementById('commentaire');
@@ -31,6 +31,7 @@ export function saveAvis() {
                 console.error('There was an error!', error);
             });
     }
+    // si les champs son valides appliquer la class "was-validated"
     form.classList.add('was-validated');
 }
 

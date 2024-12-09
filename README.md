@@ -32,3 +32,10 @@ cd ZooArcadiaWeb
 ```sh
 php -S localhost:8080
 ```
+
+## Commandes pratiques 
+
+- Compiler les styles scss en css
+```shell
+node-sass .\scss\main.scss .\scss\main.css
+```

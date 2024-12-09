@@ -1,5 +1,6 @@
 import {api} from '/scripts/common/api.js';
 import {INIT_PAGE, ITEM_PER_PAGE} from "/scripts/common/commun.js";
+const route = "users";
 
 export function editUser(id) {
     api.get(`/users/${id}`)
@@ -63,7 +64,7 @@ export function fetchUsers(page = INIT_PAGE, usersPerPage = ITEM_PER_PAGE) {
 
 export function deleteUser(id) {
     if (confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
-        api.delete(`/users/${id}`)
+        api.delete(`/users/${id}`, route)
             .then(() => {
                 fetchUsers();
             })
@@ -137,7 +138,7 @@ export function addUser() {
                 prenom: prenomInputText.value.trim(),
                 role: roleSelect.value,
             }
-            api.put(`/users/${idUser}`, itemUpdate).then((response) => {
+            api.put(`/users/${idUser}`, itemUpdate, route).then((response) => {
                 if (response.userId) {
                     treatSuccessCreateOrUpdateUser(form, mailError);
                 } else {
@@ -150,7 +151,7 @@ export function addUser() {
                     console.error('There was an error!', error);
                 });
         } else {
-            api.post(`/users/`, itemAdd)
+            api.post(`/users/`, itemAdd, route)
                 .then((response) => {
                     if (response.userId) {
                         treatSuccessCreateOrUpdateUser(form, mailError);

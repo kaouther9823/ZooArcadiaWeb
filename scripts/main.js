@@ -17,12 +17,12 @@ import {
     fetchRapportsEmploye,
     filterReportsEmployes
 } from "/scripts/entities/rapportEmploye.js";
-import {login, logout, showAndHideElementsForRoles, loadUserInfos} from "/scripts/login.js";
+import {login, logout, updateMenu, loadUserInfos} from "/scripts/login.js";
 import {sendDemandeContact} from "/scripts//visiteur/contact.js";
 import {fetchConsultations} from "/scripts/entities/consultation.js"
 
 document.addEventListener('DOMContentLoaded', function () {
-    showAndHideElementsForRoles();
+    updateMenu();
     fetchHorrairesFooter();
     let trouve = true;
     switch (location.pathname) {
@@ -153,7 +153,7 @@ window.addCommentaire = addCommentaire;
 window.editCommentaire = editCommentaire;
 window.deleteCommentaire = deleteCommentaire;
 window.filterReportsEmployes = filterReportsEmployes;
-window.showAndHideElementsForRoles = showAndHideElementsForRoles;
+//window.showAndHideElementsForRoles = showAndHideElementsForRoles;
 window.login = login;
 window.logout = logout;
 window.loadUserInfos = loadUserInfos;

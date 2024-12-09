@@ -1,6 +1,6 @@
 import {api} from '/scripts/common/api.js';
 import {INIT_PAGE, ITEM_PER_PAGE} from "/scripts/common/commun.js";
-
+const route =  "habitats"
 const controllerUrl = "/habitats/"
 
 export function showHabitat(id) {
@@ -94,7 +94,7 @@ function createHabitatRow(habitat) {
 
 export function deleteHabitat(id) {
     if (confirm('Êtes-vous sûr de vouloir supprimer cet habitat ?')) {
-        api.delete(`${controllerUrl}${id}`)
+        api.delete(`${controllerUrl}${id}`, route)
             .then(response => {
                 console.log(response);
                 fetchHabitats();
@@ -137,7 +137,7 @@ export function addHabitat() {
         Array.from(files).forEach(file => formData.append('images[]', file));
 
         if (idHabitat) {
-            api.put(`${controllerUrl}${idHabitat}`, habitatItem)
+            api.put(`${controllerUrl}${idHabitat}`, habitatItem, route)
                 .then(data => {
                     api.uploadImages(`${controllerUrl}${data.id}/upload`, formData);
                     window.location.href = '/admin/habitats';
@@ -147,7 +147,7 @@ export function addHabitat() {
                 })
                 .catch(error => console.error('Error adding habitat:', error));
         } else {
-            api.post(controllerUrl, habitatItem)
+            api.post(controllerUrl, habitatItem, route)
                 .then(data => {
                     return api.uploadImages(`${controllerUrl}${data.id}/upload`, formData);
                 })

@@ -1,5 +1,7 @@
-import {api} from '/scripts/common/api.js';
+import {api, API_BASE_URL} from '/scripts/common/api.js';
 import {INIT_PAGE, ITEM_PER_PAGE} from "/scripts/common/commun.js";
+import DOMPurify from "/scripts/vendor/purify.es.js";
+const route = "services";
 
 export function editService(id) {
     api.get(`/services/${id}`)
@@ -17,7 +19,6 @@ export function editService(id) {
             console.error('There was an error!', error);
         });
 }
-
 
 export function fetchServices(page = INIT_PAGE, servicesPerPage = ITEM_PER_PAGE) {
     api.get('/services/images/list')
@@ -56,7 +57,7 @@ export function fetchServices(page = INIT_PAGE, servicesPerPage = ITEM_PER_PAGE)
 
 export function deleteService(id) {
     if (confirm('Êtes-vous sûr de vouloir supprimer ce service ?')) {
-        api.delete(`/services/${id}`)
+        api.delete(`/services/${id}`, route)
             .then(() => {
                 fetchServices();
             })
@@ -67,6 +68,7 @@ export function deleteService(id) {
 }
 
 function treatSuccessCreateOrUpdateService(files, data, formData) {
+    const form = document.getElementById('serviceForm');
     if (files && files.length > 0) {
         api.uploadImages(`/services/${data.serviceId}/upload`, formData)
             .then( () => fetchServices())
@@ -92,8 +94,11 @@ export function addService() {
     if (form.checkValidity() === false) {
         event.stopPropagation();
     } else {
-        const nameInputText = document.getElementById("name");
-        const descriptionInputText = document.getElementById("description");
+        const nameInputText = DOMPurify.sanitize(document.getElementById("name"));
+        const descriptionInputText = DOMPurify.sanitize(document.getElementById("description"));
+        //const nameInputText = document.getElementById("name");
+        //const descriptionInputText = document.getElementById("description");
+        const csrfToken = document.getElementById('csrfToken').value;
         // upload images
         const formData = new FormData();
         const files = document.getElementById('images').files;
@@ -103,10 +108,10 @@ export function addService() {
         const item = {
             nom: nameInputText.value.trim(),
             description: descriptionInputText.value.trim(),
-       //     imagePath: 'services/' + data.filename
+            _csrf_token: csrfToken // Ajout du token CSRF
         };
                 if (idService) {
-                    api.put(`/services/${idService}`, item)
+                    api.put(`/services/${idService}`, item, route)
                         .then((data) => {
                             //document.getElementById("btn-close").click();
                             treatSuccessCreateOrUpdateService(files, data, formData, form);
@@ -116,7 +121,7 @@ export function addService() {
                         });
 
                 } else {
-                    api.post(`/services/`, item)
+                    api.post(`/services/`, item, route)
                         .then((data) => {
                             treatSuccessCreateOrUpdateService(files, data, formData, form);
                         })
@@ -147,3 +152,4 @@ function renderPagination(totalPages, currentPage) {
         paginationElement.appendChild(li);
     }
 }
+//document.addEventListener('DOMContentLoaded', fetchCsrfToken);

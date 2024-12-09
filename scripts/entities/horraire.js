@@ -1,5 +1,5 @@
 import {api, headers, SERVEUR_URL} from "/scripts/common/api.js";
-
+const route = 'horraires';
 export function editHorraire(event) {
 
     const cell = event.currentTarget;
@@ -37,7 +37,7 @@ export function saveHorraires() {
         const closingTime = row.children[2].textContent;
         scheduleData.push({day, openingTime, closingTime});
     });
-    api.post('/horraires', scheduleData)
+    api.post('/horraires', scheduleData, route)
         .then(response => console.log(response))
         .catch(error => console.error('There was an error!', error));
 

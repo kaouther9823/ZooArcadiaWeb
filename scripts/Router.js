@@ -1,6 +1,6 @@
 import Route from "./Route.js";
 import {allRoutes, websiteName} from "./allRoutes.js";
-import {getRole, isConnected} from "/scripts/login.js";
+//import {getRole} from "/scripts/login.js";
 
 // Création d'une route pour la page 404 (page introuvable)
 const route404 = new Route("/404", "Page introuvable", "/pages/404.html");
@@ -24,12 +24,19 @@ const getRouteByUrl = (url) => {
             if (isForm) {
                 currentRoute.url = url;
             }
+            return currentRoute;
         }
     });
-    const role = getRole();
+    //const role = getRole();
 
     // Si aucune correspondance n'est trouvée, on retourne la route 404
+
     if (currentRoute != null) {
+        return currentRoute;
+    } else {
+        return route404;
+    }
+/*    if (currentRoute != null) {
         const roles = currentRoute.roles;
         if (!roles || roles.length === 0) {
             return currentRoute;
@@ -42,7 +49,7 @@ const getRouteByUrl = (url) => {
         }
     } else {
         return route404;
-    }
+    }*/
 };
 
 // Fonction pour charger le contenu de la page

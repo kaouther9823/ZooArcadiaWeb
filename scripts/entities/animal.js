@@ -1,9 +1,15 @@
 import {api} from '/scripts/common/api.js';
 import {INIT_PAGE, ITEM_PER_PAGE} from "/scripts/common/commun.js";
+const route = "animaux";
 
+/**
+ * Editer un animal
+ * @param id
+ */
 export function editAnimal(id) {
-    api.get(`/animaux/${id}`)
+    api.get(`/${route}/${id}`) // appel de l'api get animal
         .then(animal => {
+            // charher les inputs et select de la formulaire par les valeurs des différents attributs
             document.getElementById('addModalLabel').innerText = "Editer un animal";
             document.getElementById('animal-id').value = animal.id;
             document.getElementById('animal-prenom').value = animal.prenom;
@@ -12,6 +18,7 @@ export function editAnimal(id) {
             if (document.getElementById('animal-habitat')) {
                 document.getElementById('animal-habitat').value = animal.habitat.id;
             }
+            // Afficher le modal d'edition avec le formulaire chargé
             if (document.getElementById('animalModal')) {
                 const animalModal = new bootstrap.Modal(document.getElementById('animalModal'), {
                     keyboard: false
@@ -24,23 +31,33 @@ export function editAnimal(id) {
         });
 }
 
+/**
+ * Récupérer les animaux en fonction de l'habitat
+ * @param habitatId identifiant de l'habitat
+ * @param page numéro de page (pagination)
+ * @param animauxPerPage nombre d'éléments par page (pagination)
+ */
 export function fetchAnimaux(habitatId, page = INIT_PAGE, animauxPerPage = ITEM_PER_PAGE) {
     const urlArray = location.pathname.split("/");
     const idHabitat = urlArray[urlArray.length - 1];
     let url;
+    // si habitat non renseigné => retourner la liste de touts les animaux
     if (!isNaN(idHabitat) && idHabitat !== "") {
         url = `/animaux/habitat/${idHabitat}`;
     } else {
         url = `/animaux`;
     }
-    api.get(`${url}`)
+    api.get(`${url}`) // appel de l'api get
         .then(animaux => {
-            const totalServices = animaux.length;
-            const totalPages = Math.ceil(totalServices / animauxPerPage);
+            // calcul du nombre des pages
+            const totalAnimaux = animaux.length;
+            const totalPages = Math.ceil(totalAnimaux / animauxPerPage);
             const offset = (page - 1) * animauxPerPage;
-            const paginatedServices = animaux.slice(offset, offset + animauxPerPage);
+            const paginatedAnimaux = animaux.slice(offset, offset + animauxPerPage);
+            // boucler sur les élémént de la page courrante et générer du code html
             let rows = '';
-            paginatedServices.forEach(animal => {
+            paginatedAnimaux.forEach(animal => {
+                // générer des lignes et cellules pour construire le tableau des animaux dynamiquement
                 rows += `
                     <tr>
                         <td>${animal.prenom}</td>
@@ -61,11 +78,15 @@ export function fetchAnimaux(habitatId, page = INIT_PAGE, animauxPerPage = ITEM_
                         </div>
                         </td>
                     </tr>`;
+                // injecter le code html généré dans le composant ayant l'id animalRows
                 document.getElementById('animalRows').innerHTML = rows;
+                // appel à la fonction renderPagination pour afficher la bar de pagination en dessous tu tableau
                 renderPagination(habitatId, totalPages, page);
+                // appel à la fonction listImagesByAnimal pour récupérer les images de chaque animal
                 listImagesByAnimal(animal.id).then(data => {
                     if (data && data.length > 0) {
-                        const imageId = data[data.length-1].imageId;
+                        // afficher chaque images dynamiquement en récupéranant les données encodés en base64
+                        const imageId = data[data.length - 1].imageId;
                         getImageById(imageId).then(image => {
                             const idImageComponent = 'animal-' + image.animalId + '-1';
                             const imgElement = document.getElementById(idImageComponent);
@@ -82,11 +103,15 @@ export function fetchAnimaux(habitatId, page = INIT_PAGE, animauxPerPage = ITEM_
         });
 }
 
+/**
+ * Supprimer un animal en fonction de son id
+ * @param id identifiant de l'animal
+ */
 export function deleteAnimal(id) {
     if (confirm('Êtes-vous sûr de vouloir supprimer cet animal ?')) {
-        api.delete(`/animaux/${id}`)
+        api.delete(`/animaux/${id}`, route) // appel à l'api delete animal
             .then(() => {
-                fetchAnimaux();
+                fetchAnimaux(); // appel à la fonction fetchAnnimaux pour rafraichir la liste
             })
             .catch(error => {
                 console.error('There was an error!', error);
@@ -94,22 +119,31 @@ export function deleteAnimal(id) {
     }
 }
 
+/**
+ * Récupérer la liste des images d'un animal en fonction de son id
+ * @param id identifiant
+ * @returns {Promise<*>}
+ */
 export function listImagesByAnimal(id) {
-    return api.get(`/animaux/${id}/images`);
+    return api.get(`/animaux/${id}/images`); // appel de l'api
 }
 
-
+/**
+ * Récupérer une image d'un animal en fonction de l'id de l'image
+ * @param id identifiant
+ * @returns {Promise<*>}
+ */
 export function getImageById(id) {
-    return api.get(`/animaux/images/${id}`);
+    return api.get(`/animaux/images/${id}`); // appel de l'api
 
 }
 
 export function addAnimalInHabitatView() {
     event.preventDefault(); // Empêche la soumission par défaut
     const idAnimalInput = document.getElementById("animal-id");
-    const idAnimal  = idAnimalInput.value;
-    if (idAnimal){
-        document.getElementById("animal-images").required=false
+    const idAnimal = idAnimalInput.value;
+    if (idAnimal) {
+        document.getElementById("animal-images").required = false
     }
 
     const form = document.getElementById('animalForm');
@@ -135,35 +169,45 @@ export function addAnimalInHabitatView() {
     form.classList.add('was-validated');
 }
 
-
+/**
+ * Ajouter un nouvel animal
+ */
 export function addAnimal() {
-    event.preventDefault(); // Empêche la soumission par défaut
+    event.preventDefault(); // Empêche la soumission par défaut du formulaire
     const idAnimalInput = document.getElementById("animal-id");
-    const idAnimal  = idAnimalInput.value;
-    if (idAnimal){
-        document.getElementById("animal-images").required=false
+    const idAnimal = idAnimalInput.value;
+    if (idAnimal) {
+        document.getElementById("animal-images").required = false
     }
     const form = document.getElementById('animalForm');
-    if (form.checkValidity() === false) {
-        event.stopPropagation();
+    if (form.checkValidity() === false) { // vérifier la validation de la formulaire
+        event.stopPropagation(); // si formulaire non valide, bloquer l'appel vers le back et afficher des messages d'erreur
     } else {
-            const name = document.getElementById("animal-prenom");
-            const race = document.getElementById("animal-race");
-            const habitat = document.getElementById("animal-habitat");
-            const etat = document.getElementById("animal-etat");
-            // upload images
+        // si formulaire valide, récupération des données saisis par l'utilisateur
+        const name = document.getElementById("animal-prenom");
+        const race = document.getElementById("animal-race");
+        const habitat = document.getElementById("animal-habitat");
+        const etat = document.getElementById("animal-etat");
+        // upload images
 
-            const item = {
-                prenom: name.value.trim(),
-                etatId: etat.value.trim(),
-                raceId: race.value.trim(),
-                habitatId: habitat.value.trim(),
-            };
+        const item = {
+            prenom: name.value.trim(),
+            etatId: etat.value.trim(),
+            raceId: race.value.trim(),
+            habitatId: habitat.value.trim(),
+        };
+        // appeler la fonction persistAnimal pour stocker l'annimal
         persistAnimal(idAnimal, item, form);
     }
     form.classList.add('was-validated');
 }
 
+/**
+ * Afficher la pagination
+ * @param habitatId
+ * @param totalPages
+ * @param currentPage
+ */
 export function renderPagination(habitatId, totalPages, currentPage) {
     const paginationElement = document.getElementById('pagination');
     paginationElement.innerHTML = '';
@@ -183,45 +227,53 @@ export function renderPagination(habitatId, totalPages, currentPage) {
     }
 }
 
+/**
+ * Stocker les images de l'animal dans la base de données
+ * @param formData
+ * @param data
+ */
+function persistImagesAnimal(formData, data) {
+    if (formData || formData.entries().next().value) {
+        api.uploadImages(`/animaux/${data.id}/upload`, formData)
+            .then(response => console.log(response))
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+    }
+}
+
+/**
+ * Stocker l'animal dans la base de données
+ * @param idAnimal
+ * @param item
+ * @param form
+ */
 function persistAnimal(idAnimal, item, form) {
 
     const formData = new FormData();
+    // récupérer les images uploadé avec le composant input file
     const files = document.getElementById('animal-images').files;
     for (let i = 0; i < files.length; i++) {
         formData.append('images[]', files[i]);
     }
-    if (idAnimal && idAnimal !== "") {
-        api.put(`/animaux/${idAnimal}`, item)
-            // .then(response => response.json())
+    if (idAnimal && idAnimal !== "") { // si l'animal existe deja appeler l'api put
+        api.put(`/animaux/${idAnimal}`, item, route)
             .then(data => {
-                if (formData || formData.entries().next().value) {
-                    api.uploadImages(`/animaux/${data.id}/upload`, formData)
-                        .then(response => console.log(response))
-                        .catch(error => {
-                            console.error('There was an error!', error);
-                        });
-                }
-                fetchAnimaux();
-                document.getElementById("btn-close-animal-modal").click();
+                persistImagesAnimal(formData, data); // stocker les images apres avoir mis à jour l'animal
+                fetchAnimaux(); // rafraichir la liste des animaux
+                document.getElementById("btn-close-animal-modal").click(); // fermer le modal animal
             })
             .catch(error => {
                 console.error('There was an error!', error);
             });
-    } else {
-        api.post(`/animaux/`, item)
-            // .then(response => response.json())
+    } else { // si l'animal n'existe pas deja en base, appeler l'api post
+        api.post(`/animaux/`, item, route)
             .then(data => {
-                if (formData || formData.entries().next().value) {
-                    api.uploadImages(`/animaux/${data.id}/upload`, formData)
-                        .then(response => console.log(response))
-                        .catch(error => {
-                            console.error('There was an error!', error);
-                        });
-                }
-                form.reset();
+                persistImagesAnimal(formData, data); // stocker les images apres avoir ajouté l'animal
+                form.reset(); // renitialiser le formaulire (etat et validation)
                 form.classList.remove('was-validated')
-                fetchAnimaux();
-                document.getElementById("btn-close-animal-modal").click();
+                fetchAnimaux(); // rafraichir la liste des animaux
+                document.getElementById("btn-close-animal-modal").click(); // fermer le modal animal
             })
             .catch(error => {
                 console.error('There was an error!', error);

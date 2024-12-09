@@ -1,4 +1,4 @@
-import {api, headers, SERVEUR_URL} from "/scripts/common/api.js"
+import {api} from "/scripts/common/api.js"
 
 export function fetchServicesForVisitor() {
    api.get('/services/images/list')
