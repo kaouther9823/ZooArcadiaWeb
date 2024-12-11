@@ -11,10 +11,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 import {API_BASE_URL} from "/scripts/common/api.js";
 
-export async function login(username, password) {
+export async function login() {
     event.preventDefault();
     const form = document.getElementById('loginForm');
     if (form.checkValidity() === false) {
+        document.getElementById('error-message').textContent = '';
         event.stopPropagation();
     } else {
         const username = document.getElementById('email').value;
@@ -138,8 +139,8 @@ export function showAndHideElementsForRoles(data) {
     //const userConnected = isConnected();
     console.log(data);
 
-    const userConnected = true;
-    const role = data.role;//getRole();
+    const userConnected = data.authenticated;
+    const role = data.role[0];//getRole();
     console.log(role);
 
     let allElementsToEdit = document.querySelectorAll('[data-show]');
@@ -178,15 +179,15 @@ export function showAndHideElementsForRoles(data) {
 
 
 function redirectToHomePage(data) {
-    switch (data.role) {
+    switch (data.role[0]) {
         case 'ROLE_ADMIN':
-            window.location.href = '/';
+            window.location.href = '/admin/consultations';
             break
-        case 'ROLE_EMPLOYEE':
-            window.location.href = '/';
+        case 'ROLE_EMPLOYE':
+            window.location.href = '/employe/rapports';
             break;
         case 'ROLE_VETERINAIRE':
-            window.location.href = '/';
+            window.location.href = '/veterinaire/rapports';
             break
         default:
             window.location.href = '/';
@@ -199,13 +200,12 @@ export function logout() {
     fetch(`${API_BASE_URL}/logout`, {
         method: 'POST',
         credentials: 'include'
+    }).then(response => { response.json();
+        window.location.href = '/connexion';
     })
-        .then(() => {
-            // Rediriger vers la page de connexion après la déconnexion
-            window.location.href = '/';
-        })
         .catch(error => {
             console.error('Erreur lors de la déconnexion:', error);
+            window.location.href = '/connexion';
         });
 }
 
@@ -241,8 +241,8 @@ export function loadUserInfos(){
             if (data.authenticated) {
                 document.getElementById('inputNom').value = data.lastname;
                 document.getElementById('inputPrenom').value = data.firstname;
-                document.getElementById('inputEmail').value = data.username;
-                document.getElementById('inputRole').value = data.roles;
+                document.getElementById('inputEmail').value = data.mail;
+                document.getElementById('inputRole').value = data.role[0];
             } else {
                 const result = response.message;
                 errorMessage.textContent = result.message;

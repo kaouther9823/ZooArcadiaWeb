@@ -1,8 +1,7 @@
 export const API_BASE_URL = 'http://localhost:8000/api';
 export const SERVEUR_URL = 'http://localhost:8000';
 export const headers =
-    {   'Content-Type': 'application/json'
-}
+    {   'Content-Type': 'application/json' }
 
 
 export const api = {
@@ -14,8 +13,7 @@ export const api = {
     },
     post: async function (url, data, route = null) {
         if (route) {
-            const csrfToken = await fetchCsrfToken(route);
-            headers.push({'X-CSRF-Token': csrfToken});
+            headers['X-CSRF-Token'] = await fetchCsrfToken(route);
         }
 
         return fetch(`${API_BASE_URL}${url}`, {
@@ -26,8 +24,7 @@ export const api = {
     },
     put: async function (url, data, route) {
         if (route) {
-            const csrfToken = await fetchCsrfToken(route);
-            headers.push({'X-CSRF-Token': csrfToken});
+            headers['X-CSRF-Token'] = await fetchCsrfToken(route);
         }
         return fetch(`${API_BASE_URL}${url}`, {
             method: 'PUT',
@@ -37,8 +34,7 @@ export const api = {
     },
     delete: async function (url, route) {
         if (route) {
-            const csrfToken = await fetchCsrfToken(route);
-            headers.push({'X-CSRF-Token': csrfToken});
+            headers['X-CSRF-Token'] = await fetchCsrfToken(route);
         }
         return fetch(`${API_BASE_URL}${url}`, {
             method: 'DELETE', credentials: 'include',
@@ -60,7 +56,15 @@ export const api = {
 };
 
 async function fetchCsrfToken(route) {
-    const response = await fetch(`${API_BASE_URL}/${route}/csrf/token`);
+    const response = await fetch(`${API_BASE_URL}/${route}/csrf/token`, {
+        method: 'GET',
+
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch CSRF token');
+    }
+
     const data = await response.json();
-    return data.csrf_token; // Sauvegarder le token pour une utilisation ultérieure
+    return data.csrfToken; // Assurez-vous que la clé correspond exactement à ce que l'API renvoie
 }

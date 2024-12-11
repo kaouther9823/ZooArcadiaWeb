@@ -61,7 +61,8 @@ const LoadContentPage = async () => {
     // Ajout du contenu HTML à l'élément avec l'ID "main-page"
     document.getElementById("main-page").innerHTML = await fetch(actualRoute.pathHtml).then((data) => data.text());
 
-    if (actualRoute.url.includes("/admin/")) {
+    if (actualRoute.url.includes("/admin/") || actualRoute.url.includes("/employe/") ||
+        actualRoute.url.includes("/veterinaire/") || actualRoute.url.includes("/profil") || actualRoute.url.includes("/connexion")) {
         document.getElementById("carousel").style.display = "none";
         document.getElementById("zooFooter").style.display = "none";
     } else {

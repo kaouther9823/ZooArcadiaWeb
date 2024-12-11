@@ -5,4 +5,4 @@ FROM nginx:latest
 COPY . /usr/share/nginx/html
 
 # Exposer le port 80 pour le frontend
-EXPOSE 90
+EXPOSE 80

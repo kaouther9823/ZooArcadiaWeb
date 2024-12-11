@@ -11,18 +11,20 @@
         </div>
     </div>
     <div class="row">
-        <table id="serviceTable" class="table table-striped nowrap w-100">
-            <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Imgae</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody id="serviceRows">
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table id="serviceTable" class="table table-striped table-sm nowrap w-100">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Imgae</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody id="serviceRows">
+                </tbody>
+            </table>
+        </div>
         <!-- Pagination -->
         <nav>
             <ul class="pagination justify-content-center" id="pagination">
@@ -31,7 +33,7 @@
         </nav>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="serviceModalLabel" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-content">

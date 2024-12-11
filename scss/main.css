@@ -10234,6 +10234,17 @@ ul li {
 .editable {
   cursor: pointer; }
 
+@media (max-width: 768px) {
+  .dropdown-menu {
+    position: static !important;
+    /* Fixe le menu dans le flux */
+    float: none;
+    /* Désactive l'alignement */ }
+  .dropdown-item {
+    text-align: center;
+    /* Centrer les liens */
+    overflow-inline: hidden; } }
+
 /*!
    * Bootstrap  v5.3.3 (https://getbootstrap.com/)
    * Copyright 2011-2024 The Bootstrap Authors

@@ -94,20 +94,21 @@ export function addService() {
     if (form.checkValidity() === false) {
         event.stopPropagation();
     } else {
-        const nameInputText = DOMPurify.sanitize(document.getElementById("name"));
-        const descriptionInputText = DOMPurify.sanitize(document.getElementById("description"));
+        const nameInputText = DOMPurify.sanitize(document.getElementById("name").value.trim());
+        const descriptionInputText = DOMPurify.sanitize(document.getElementById("description").value.trim());
         //const nameInputText = document.getElementById("name");
         //const descriptionInputText = document.getElementById("description");
         const csrfToken = document.getElementById('csrfToken').value;
         // upload images
         const formData = new FormData();
         const files = document.getElementById('images').files;
-        formData.append('image', files[0]);
-        formData.append('imageName', files[0].name);
-
+        if (files && files.length > 0) {
+            formData.append('image', files[0]);
+            formData.append('imageName', files[0].name);
+        }
         const item = {
-            nom: nameInputText.value.trim(),
-            description: descriptionInputText.value.trim(),
+            nom: nameInputText,
+            description: descriptionInputText,
             _csrf_token: csrfToken // Ajout du token CSRF
         };
                 if (idService) {
